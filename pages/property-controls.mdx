@@ -1,0 +1,130 @@
+<!-- 👋 Editing this file? Need help? → https://github.com/framer/api-docs/blob/master/CONTRIBUTING.md -->
+
+import {
+  APIEnum,
+  APIEnumField,
+  Template,
+} from "../components"
+
+export default Template
+
+# Property Controls
+
+<span className="lead">
+  Add controls to your components to allow customization via
+  the Framer X interface.
+</span>
+
+<div>
+
+Property Controls allow code components to add interface elements to Framer X that are accessible from within your components via properties. This allows you to create customizable settings for anyone that uses it. Custom controls can be added via the `addPropertyControls` function.
+
+First, pass along the name of your component (here it’s `MyComponent`), then an object with all control definitions. In this example, we’re only adding a single custom property: `text`. If you drag the component on the Canvas in Framer X, you’ll be able to override the text contents of the component.
+
+</div>
+
+```jsx
+import * as React from "react"
+import {
+  Frame,
+  addPropertyControls,
+  ControlType,
+} from "framer"
+
+export function MyComponent(props) {
+  return <Frame>{props.text}</Frame>
+}
+
+MyComponent.defaultProps = {
+  text: "Hello World!",
+}
+
+addPropertyControls(MyComponent, {
+  text: { type: ControlType.String, title: "Text" },
+})
+```
+
+---
+
+## Hiding Controls
+
+<div>
+
+Controls can be hidden by adding the `hidden` function to the property description. The function receives an object containing the set properties and returns a `boolean`. In this example we hide the the `text` property entirely when the connected property (the `toggle`) is `false`.
+
+Now you can toggle the visibilty of the text property control by changing the `toggle` boolean from within the property panel in Framer X.
+
+</div>
+
+```jsx
+export function MyComponent(props) {
+  return <div>{props.text}</div>
+}
+
+MyComponent.defaultProps = {
+  text: "Hello World!",
+  toggle: true,
+}
+
+addPropertyControls(MyComponent, {
+  toggle: {
+    type: ControlType.Boolean,
+    title: "Toggle",
+    enabledTitle: "Show",
+    disabledTitle: "Hide",
+  },
+  text: {
+    type: ControlType.String,
+    title: "Text",
+    hidden(props) {
+      return props.toggle === false
+    },
+  },
+})
+```
+
+---
+
+## Array
+
+<APIEnumField name="ControlType.Array" />
+
+## Boolean
+
+<APIEnumField name="ControlType.Boolean" />
+
+## Color
+
+<APIEnumField name="ControlType.Color" />
+
+## ComponentInstance
+
+<APIEnumField name="ControlType.ComponentInstance" />
+
+## Enum
+
+<APIEnumField name="ControlType.Enum" />
+
+## File
+
+<APIEnumField name="ControlType.File" />
+
+## FusedNumber
+
+<APIEnumField name="ControlType.FusedNumber" />
+
+## Image
+
+<APIEnumField name="ControlType.Image" />
+
+## Number
+
+<APIEnumField name="ControlType.Number" />
+
+## SegmentedEnum
+
+<APIEnumField name="ControlType.SegmentedEnum" />
+
+## String
+
+<APIEnumField name="ControlType.String" />

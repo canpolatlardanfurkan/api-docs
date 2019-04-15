@@ -1,0 +1,422 @@
+<!-- 👋 Editing this file? Need help? → https://github.com/framer/api-docs/blob/master/CONTRIBUTING.md -->
+
+import {
+  APIClass,
+  APIVariable,
+  APIFunction,
+  APIMethod,
+  APIInterface,
+  APIProperty,
+  APIMergedInterface,
+  Template,
+  Link,
+  Ref,
+  Callout,
+  Todo,
+} from "../components"
+
+export default Template
+
+# Animation
+
+<span className="lead">
+  A set of properties and helpers for high-performance,
+  declarative animations.
+</span>
+
+<div>
+
+Animations in Framer are primarily controlled via the `Frame` component. The key properties are `animate` and `transition`, which take a variety of options to customize animations. All the animation properties and helpers are included when you import `Frame`, with the exception of `useCycle`.
+You can find all the `Frame` animation properties and methods [here](../frame/#animation).
+
+<br />
+
+<Callout>
+  Framer Library v0.10 and earlier used an older Animation
+  API.{" "}
+  <Link href="pages/animation-deprecated.mdx">
+    Learn more ›
+  </Link>
+</Callout>
+
+</div>
+
+```jsx
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  return (
+    <Frame
+      animate={{ rotate: 360 }}
+      transition={{ duration: 2 }}
+    />
+  )
+}
+```
+
+---
+
+## Overview
+
+### Frame
+
+<div>
+
+Most animations are controlled via the `Frame` component, where you can set animations, options and listen for updates. The specific `Frame` properties relating to animations are linked to below.
+
+- <Ref name="AnimationProps.animate">animate</Ref>
+- <Ref name="AnimationProps.transition">transition</Ref>
+- <Ref name="AnimationProps.variants">variants</Ref>
+- <Ref name="MotionProps.initial">initial</Ref>
+- <Ref name="MotionCallbacks.onUpdate">onUpdate</Ref>
+- <Ref name="MotionCallbacks.onAnimationComplete">
+    onAnimationComplete
+  </Ref>
+
+</div>
+
+```jsx
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  function onUpdate({ rotate }) {
+    console.log(rotate)
+  }
+
+  return (
+    <Frame
+      initial={{ rotate: 0 }}
+      animate={{ rotate: 360 }}
+      transition={{ duration: 2 }}
+      onUpdate={onUpdate}
+    />
+  )
+}
+```
+
+---
+
+### Animate
+
+Animations are controlled with the `animate` property. When the values in `animate` change, the `Frame` will automatically animate to them.
+
+```jsx
+<Frame animate={{ opacity: 0 }} />
+```
+
+---
+
+### Transitions
+
+<div>
+
+The transition for the values in `animate` can be set via the `transition` property.
+
+Transition options include:
+
+- **Tween** with a linear or easing curve and given duration.
+- **Spring** based on mass, damping and stiffness.
+- **Physics** friction based on velocity and acceleration.
+- **Inertia** spring and friction combined scroll physics.
+
+</div>
+
+```jsx
+<Frame
+  animate={{ opacity: 0 }}
+  transition={{ duration: 1 }}
+/>
+```
+
+---
+
+### Initial State
+
+An initial visual state can be set with the `initial` property. This gives you a visual default for your `Frame` to begin with.
+
+```jsx
+<Frame initial={{ scale: 0 }} animate={{ scale: 1 }} />
+```
+
+---
+
+### Variants
+
+<div>
+
+Variants are visual states that can be defined externally from a `Frame` and passed in via the `variants` property. This allows variant labels to be used in place of values on the `animate`, `initial`, `press`, and `hover` properties.
+
+- The initial state is set to `"hidden"`.
+- The `hidden` variant gets a custom transition.
+- The `Frame` animates from its default to `visible`.
+- The entire `variants` object is passed to the `Frame`.
+
+</div>
+
+```jsx
+export function MyComponent() {
+  const variants = {
+    hidden: {
+      opacity: 0,
+      transition: { duration: 0.5 },
+    },
+    visible: { opacity: 1 },
+  }
+
+  return (
+    <Frame
+      initial="hidden"
+      animate="visible"
+      variants={variants}
+    />
+  )
+}
+```
+
+---
+
+### Animating Children
+
+<div>
+
+A child `Frame` can be animated with variants **of the same name** triggered by the parent. These variant changes will propagate throughout children, even those that aren't direct children.
+
+For this to work however, you **cannot** use the `animate` property on a child `Frame`. If you do, variant changes from the parent will be ignored and the child `Frame` will use the `animate` property instead.
+
+</div>
+
+```jsx
+export function MyComponent() {
+  // Parent variants
+  const list = {
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0 },
+  }
+
+  // Child variants
+  const item = {
+    hidden: { opacity: 0, scale: 0.5 },
+    visible: { opacity: 1, scale: 1 },
+  }
+
+  return (
+    <Frame
+      variants={list}
+      initial="hidden"
+      animate="visible"
+    >
+      <Frame variants={item} />
+      <Frame variants={item} />
+      <Frame variants={item} />
+    </Frame>
+  )
+}
+```
+
+---
+
+### Parent & Child Orchestration
+
+<div>
+
+When animating children, parent variants can schedule child animations using the orchestration properties of `transition`.
+
+[See all orchestration options ›](#orchestration)
+
+</div>
+
+```jsx
+const list = {
+  hidden: {
+    opacity: 0,
+    x: -100,
+    transition: { when: "afterChildren" },
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { when: "beforeChildren" },
+  },
+}
+```
+
+---
+
+### Dynamic Variants
+
+<div>
+
+Variants can be set as functions to dynamically generate variant settings. When a component animates to a dynamic variant, it’ll pass its own props to that function, allowing each component to get a modified animation.
+
+Here, we create a staggered animation by passing along the `index` property to each `Frame`, and in the `variant` definition. All Frames share the same `variants` object, and animate to the same `hidden` variant—they only differ in their indices.
+
+</div>
+
+```javascript
+export function MyComponent() {
+  const variants = {
+    hidden: ({ index }) => ({
+      opacity: 0,
+      transition: { delay: index * 0.05 },
+    }),
+  }
+  return (
+    <Frame>
+      <Frame
+        index={0}
+        variants={variants}
+        animate="hidden"
+      />
+      <Frame
+        index={1}
+        variants={variants}
+        animate="hidden"
+      />
+      <Frame
+        index={2}
+        variants={variants}
+        animate="hidden"
+      />
+    </Frame>
+  )
+}
+```
+
+---
+
+### Supported Value Types
+
+<div>
+
+- **Numbers**
+- **Strings**
+- **All Unit Types** (`px`, `%`, `calc()`, etc.)
+- **Colors** (`hex`, `rgba`, `hsla`)
+- **Complex Values** (Strings with numbers and colors)
+
+When animating complex values, for instance `boxShadow`, all non-numerical portions of the value must be in the exact same format in every state. For instance, `"5px 10px #333"` can be animated to `"0px 0px #333"` but not `"0 0 #333"`.
+
+</div>
+
+```jsx
+export function MyComponent() {
+  const animate = {
+    x: 0,
+    y: "100%",
+    display: "block",
+    color: "rgba(0, 0, 0, 0.5)",
+    boxShadow: "5px 10px #333",
+  }
+
+  return <Frame animate={animate} />
+}
+```
+
+---
+
+### Transforms
+
+<div>
+
+Transform values can be animated as separate values.
+
+- `x`, `y`, `z`
+- `rotate`, `rotateX`, `rotateY`, `rotateZ`
+- `scale`, `scaleX`, `scaleY`, `scaleZ`
+- `skewX`, `skewY`
+- `originX`, `originY`
+- `perspective`
+
+</div>
+
+```jsx
+<Frame animate={{ rotate: 90, scaleX: 1.2 }} />
+```
+
+---
+
+### Value Conversion
+
+<div>
+
+The properties `x`, `y`, `width`, `height`, `top`, `left`, `bottom` and `right` can be animated between different value types.
+
+</div>
+
+```jsx
+const variants = {
+  closed: { x: 0 },
+  open: { x: "calc(50vw - 50%)" },
+}
+```
+
+---
+
+## Tween
+
+An animation that animates between two or more values over a specific `duration` of `time`. This is the default animation for non-physical values like color and opacity.
+
+<APIProperty name="Tween.type" />
+<APIProperty name="Tween.duration" />
+<APIProperty name="Tween.ease" />
+<APIProperty name="Tween.easings" />
+<APIProperty name="Tween.from" />
+<APIProperty name="Tween.loop" />
+<APIProperty name="Tween.yoyo" />
+<APIProperty name="Tween.times" />
+<APIProperty name="Tween.flip" />
+
+## Spring
+
+An animation that simulates spring physics for realistic motion. This is the default animation for physical values like `x`, `y`, `scale` and `rotate`.
+
+<APIProperty name="Spring.type" />
+<APIProperty name="Spring.damping" />
+<APIProperty name="Spring.mass" />
+<APIProperty name="Spring.stiffness" />
+<APIProperty name="Spring.velocity" />
+<APIProperty name="Spring.restSpeed" />
+<APIProperty name="Spring.restDelta" />
+
+## Inertia
+
+The animation that occurs after you release a draggable `Frame`.
+It decelerates a value based on its initial velocity. Optionally, `min` and `max` boundaries can be defined, and inertia will snap to these with a spring animation.
+This animation will automatically precalculate a target value, which can be modified with the `modifyTarget` property. This allows you to add snap-to-grid or similar functionality.
+
+<APIProperty name="Inertia.bounceDamping" />
+<APIProperty name="Inertia.bounceStiffness" />
+<APIProperty name="Inertia.max" />
+<APIProperty name="Inertia.min" />
+<APIProperty name="Inertia.power" />
+<APIProperty name="Inertia.restDelta" />
+<APIProperty name="Inertia.timeConstant" />
+<APIMethod name="Inertia.modifyTarget()" />
+
+## Orchestration
+
+Options for orchestrating the timing of animations to build staggered animations or sequences.
+
+<APIProperty name="Orchestration.delay" />
+<APIProperty name="Orchestration.delayChildren" />
+<APIProperty name="Orchestration.staggerChildren" />
+<APIProperty name="Orchestration.staggerDirection" />
+<APIProperty name="Orchestration.when" />
+
+## Types
+
+<APIClass name="MotionValue" skipnav />
+
+<APIClass name="AnimationControls" skipnav />
+
+<APIVariable
+  name="EasingFunction"
+  overrides={{ signature: "EasingFunction" }}
+/>
+
+<APIVariable
+  name="TargetAndTransition"
+  overrides={{ signature: "TargetAndTransition" }}
+/>

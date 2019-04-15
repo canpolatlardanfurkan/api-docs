@@ -1,0 +1,66 @@
+<!-- 👋 Editing this file? Need help? → https://github.com/framer/api-docs/blob/master/CONTRIBUTING.md -->
+
+import {
+  APIMethod,
+  APIFunction,
+  APIInterface,
+  Template,
+} from "../components"
+
+export default Template
+
+# Data
+
+<span className="lead">
+  A way to share data between components within Framer X,
+  using code overrides.
+</span>
+
+<div>
+
+The Data objects behaves like a simple JavaScript object in which you can store anything.
+It updates the user interface of your project on every change, and can be used to share data between components and Frames. In this example, we’re simply changing the `text` property of any text layer the override gets applied to.
+
+</div>
+
+```jsx
+import { Override, Data } from "framer"
+
+const data = Data({ name: "Ben" })
+
+export function setName(): Override {
+  return {
+    text: data.name,
+  }
+}
+```
+
+---
+
+### Incrementing Values
+
+You can also use the `Data` object to increment numeric values.
+Here, we’re storing the `rotate` value as `0` by default.
+Then, we’re setting `animate` to always set `rotate` to said value.
+Finally, the `data.rotate` value gets incremented by `90` on every tap.
+
+```jsx
+import { Data, Override } from "framer"
+
+const data = Data({
+  rotate: 0,
+})
+
+export function Rotate(): Override {
+  return {
+    animate: { rotate: data.rotate },
+    onTap() {
+      data.rotate = data.rotate + 90
+    },
+  }
+}
+```
+
+---
+
+<APIFunction name="Data()" />

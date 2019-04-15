@@ -1,0 +1,33 @@
+<!-- 👋 Editing this file? Need help? → https://github.com/framer/api-docs/blob/master/CONTRIBUTING.md -->
+
+import {
+  Template,
+  APIEnum,
+  APIFunction,
+  APIEnumField,
+} from "../components"
+
+export default Template
+
+# Render Target
+
+<span className="lead">
+  The current environment of a component. Often the canvas
+  or preview in Framer X.
+</span>
+
+Components can use the `RenderTarget.current()` method to check for the environment within their components and vary rendering accordingly. The most common case would be to improve performance while rendering in the canvas, where components that take too long to render will be replaced with a placeholder. The `RenderTarget.hasRestrictions()` method can be used to check explicitly for this case.
+
+---
+
+## Properties
+
+<APIEnumField name="RenderTarget.canvas"/>
+<APIEnumField name="RenderTarget.export"/>
+<APIEnumField name="RenderTarget.preview"/>
+<APIEnumField name="RenderTarget.thumbnail"/>
+
+## Functions
+
+<APIFunction name="RenderTarget.current()" />
+<APIFunction name="RenderTarget.hasRestrictions()" />

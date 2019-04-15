@@ -1,0 +1,362 @@
+<!-- 👋 Editing this file? Need help? → https://github.com/framer/api-docs/blob/master/CONTRIBUTING.md -->
+
+import {
+  APIInterface,
+  APIMethod,
+  APIProperty,
+  APIFunction,
+  Template,
+  Link,
+  RefAnchor,
+  Callout,
+  Todo,
+} from "../components"
+
+export default Template
+
+<!-- Use RefAnchor here because we manually layout Frame -->
+
+# Frame <RefAnchor name="Frame" />
+
+<span className="lead">
+  The basic container for layout, styling, animation and
+  events.
+</span>
+
+<div>
+
+The `Frame` component is a `div` with extra options and opinionated defaults to get things done more quickly. The top level props just generate `style` for the underlying `div`, but you always override any styling with the `style` prop. Frames allow you to do the following.
+
+- Set sizes and add layout constraints.
+- Center horizontally or vertically.
+- Change colors or background images.
+- Animate between states (variants).
+- Add tap events that work on desktop and mobile.
+- Add advanced behavior like dragging.
+- Respond to advanced gestures like pan.
+
+<br />
+
+<Callout>
+  Framer Library v0.10 and earlier used an older
+  <Link href="/pages/frame-deprecated.mdx"> Frame API</Link>.
+</Callout>
+
+</div>
+
+```jsx
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  return (
+    <Frame size={300} center>
+      Hello
+    </Frame>
+  )
+}
+```
+
+---
+
+### Performance
+
+To get the most performance from your animations, try to only animate [transform values](#transform) and opacity, as they are GPU-accelerated. This way, you can animate hundreds of layers on modern mobile devices.
+
+```jsx
+// GPU accelerated (fast)
+<Frame initial={{scale: 1}} animate={{scale: 2}} />
+
+// CPU drawing (slower)
+<Frame initial={{size: 200}} animate={{size: 400}} />
+```
+
+---
+
+### Integration
+
+<div>
+
+The Frame component was designed to play nice with any DOM element, mainly because it **is** a DOM element (regular `div`) itself. You can use any layout combination between `size`, `width`, `height`, `top`, `right`, `bottom`, `left` and `center`.
+
+Here’s an example of a complicated dynamic layout that uses variable, fixed and centered layout right inside a parent `div`.
+
+</div>
+
+```jsx
+export function MyComponent(props) {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        background: "rgba(255, 0, 0, .5)",
+      }}
+    >
+      <Frame size="40%" center="x" top={50}>
+        Hello
+      </Frame>
+    </div>
+  )
+}
+```
+
+---
+
+### Text Centering
+
+If your `Frame` only contains text contents, it will be centered by default for convenience. You can avoid this behavior by wrapping the text in a `span` element.
+
+```jsx
+// Text contents will be centered
+<Frame>Hello</Frame>
+
+// Text contents will not be centered
+<Frame><span>Hello</span></Frame>
+```
+
+---
+
+### Event Handling
+
+Event propagation is handled by [React](https://reactjs.org/docs/events.html) and behaves like [DOM events](https://developer.mozilla.org/en-US/docs/Web/Events). You can cancel events with `preventDefault()` and stop propagation with `stopPropagation()`.
+
+---
+
+### DOM
+
+<div>
+
+The `Frame` component is based on an HTML `div` so it inherits all DOM properties using [camelCasing](https://en.wikipedia.org/wiki/Camel_case).
+
+- [Standard `HTMLDivElement` DOM properties](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)
+- [Supported `React.Element` DOM props](https://reactjs.org/docs/dom-elements.html#all-supported-html-attributes)
+
+</div>
+
+```jsx
+// CSS classes
+<Frame className="pretty" />
+
+// DOM events
+<Frame onClick={onClick} />
+<Frame onMouseOut={onMouseOut} />
+<Frame onTouchUp={onTouchUp} />
+
+```
+
+---
+
+## Layout
+
+Layout rules for `Frame` behave like regular CSS, and re-layout if the parent element (`Frame` or `div`) resizes. You can optionally use handy shortcuts like `center` to quickly center elements in their parent.
+
+Frames are positioned `absolute` by default. You can explicitly change this with the `position` property. If you add a Frame as a child of a component that expects `relative` layout (like `Stack`), that component may override the `position` to `relative` automatically, for convenience.
+
+<div>
+
+When the combination of layout properties is incompatible, the override order is consistent with CSS. The `x` and `y` transforms always work, as they are applied after the normal layout rules are set.
+
+- `height` > `top`, `bottom` > `center=“y”`
+- `width` > `left`, `right` > `center=“x”`
+
+</div>
+
+```jsx
+// Right is ignored
+<Frame width={100} left={100} right={100} />
+
+// Center is ignored
+<Frame left={0} right={100} center="x" />
+```
+
+---
+
+<APIProperty name="LayoutProperties.width" />
+<APIProperty name="LayoutProperties.height" />
+<APIProperty name="ShortcutsProperties.size" />
+
+<APIProperty name="LayoutProperties.top" />
+<APIProperty name="LayoutProperties.right" />
+<APIProperty name="LayoutProperties.bottom" />
+<APIProperty name="LayoutProperties.left" />
+<APIProperty name="ShortcutsProperties.center" />
+<APIProperty name="LayoutProperties.position" overrides={{signature: `position: string`}} />
+
+## Visual
+
+<APIProperty name="MotionProps.style" />
+<APIProperty name="VisualProperties.visible" />
+<APIProperty name="VisualProperties.opacity" />
+<APIProperty name="BackgroundProperties.background" />
+<APIProperty name="ShortcutsProperties.image" />
+<APIProperty name="VisualProperties.color" />
+<APIProperty name="VisualProperties.border" />
+<APIProperty name="VisualProperties.borderRadius" />
+<APIProperty name="VisualProperties.overflow" />
+
+---
+
+## Transform
+
+<div>
+
+Transform properties are accelerated by the GPU and therefore animate smoothly. They are directly mapped to their CSS `transform()` counterparts, so `x = 200` becomes `transform: translateX(200)`. The transformations are applied after the normal [layout rules](#Layout).
+
+The exact order how the transforms are applied is: `translate`, `scale`, `rotate` and `skew`. You can customize the order using `transformTemplate`.
+
+</div>
+
+```jsx
+<Frame
+  x={100}
+  y={100}
+  z={100}
+  rotate={90}
+  scale={1.2}
+  skew={15}
+/>
+```
+
+---
+
+<APIProperty name="CSSTransformProperties.x" />
+<APIProperty name="CSSTransformProperties.y" />
+<APIProperty name="CSSTransformProperties.z" />
+<APIProperty name="CSSTransformProperties.rotate" />
+<APIProperty name="CSSTransformProperties.rotateX" />
+<APIProperty name="CSSTransformProperties.rotateY" />
+<APIProperty name="CSSTransformProperties.rotateZ" />
+<APIProperty name="CSSTransformProperties.scale" />
+<APIProperty name="CSSTransformProperties.scaleX" />
+<APIProperty name="CSSTransformProperties.scaleY" />
+<APIProperty name="CSSTransformProperties.skew" />
+<APIProperty name="CSSTransformProperties.skewX" />
+<APIProperty name="CSSTransformProperties.skewY" />
+<APIProperty name="CSSTransformProperties.originX" />
+<APIProperty name="CSSTransformProperties.originY" />
+<APIProperty name="CSSTransformProperties.originZ" />
+<APIProperty name="CSSTransformProperties.perspective" />
+
+<APIFunction name="MotionProps.transformTemplate()" />
+
+## Animation
+
+The following are properties accepted by the `Frame` component for animation, in addition to its standard properties. When animation properties are combined, they become very flexible and powerful.
+
+---
+
+<APIProperty name="AnimationProps.animate" />
+<APIProperty name="AnimationProps.transition" />
+<APIProperty name="MotionProps.initial" />
+
+<APIFunction name="MotionCallbacks.onUpdate()" />
+<APIFunction name="MotionCallbacks.onAnimationComplete()" />
+
+## Transition
+
+<div>
+
+The `transition` property can be used to customise animations directly on a `Frame`. A `transition` typically defines a single transition that applies to all animating values on that `Frame`. It’s possible to override this `transition` property if a transition is added to an object or `variants` label given to the `animate`, `hover` or `press` properties.
+
+</div>
+
+```jsx
+<Frame
+  animate={{ scale: 0.5 }}
+  transition={{ ease: "easeOut" }}
+/>
+```
+
+You can also define a seperate transition for each animating value on the `Frame`. Any properties left unspecified will use a default transition.
+
+```jsx
+const transition = {
+  x: { type: "spring", stiffness: 400 },
+  opacity: { ease: "easeIn" },
+}
+```
+
+To override the default `transition`, when defining separate transitions for each animating value, you can override the `default` property.
+
+```jsx
+const transition = {
+  x: { type: "keyframes", values: [0, 100, 0] },
+  default: { duration: 0.5 },
+}
+```
+
+You can add orchestration properties like `delay` to affect the whole animation. The numeric value represent seconds.
+
+```jsx
+const transition = {
+  delay: 1,
+  opacity: { duration: 0.5 },
+}
+```
+
+The `transition` property can also be specified inside your variants object and then passed to your `Frame` using the `variants` property.
+
+```jsx
+const variants = {
+  hidden: {
+    opacity: 0,
+    transition: { duration: 0.25 },
+  },
+  visible: { opacity: 1 },
+}
+```
+
+---
+
+## Variants
+
+Variants are an advanced way to organize your animation states by name.
+
+<APIProperty name="AnimationProps.variants" />
+
+## Tap
+
+A tap is a convenience alternative to the native browser click event. The main differences are:
+
+- It works on both mobile and desktop, leveraging `click` and `touch` events based on the platform.
+- It only fires if `up` was received on the same Frame that got the initial `down` to mimic interface button behaviour.
+- It does not fire if any of the parents were `Scroll` components and were scrolled after `onTapStart`.
+
+---
+
+<APIProperty name="TapHandlers.whileTap" />
+<APIMethod name="TapHandlers.onTap()" />
+<APIMethod name="TapHandlers.onTapStart()" />
+<APIMethod name="TapHandlers.onTapCancel()" />
+
+## Hover
+
+<APIProperty name="HoverHandlers.whileHover" />
+<APIMethod name="HoverHandlers.onHoverStart()" />
+<APIMethod name="HoverHandlers.onHoverEnd()" />
+
+## Pan
+
+<APIMethod name="PanHandlers.onPan()" />
+<APIMethod name="PanHandlers.onPanStart()" />
+<APIMethod name="PanHandlers.onPanEnd()" />
+
+## Drag
+
+<APIMethod name="DragHandlers.onDrag()" />
+<APIMethod name="DragHandlers.onDragStart()" />
+<APIMethod name="DragHandlers.onDragEnd()" />
+<APIMethod name="DragHandlers.onDirectionLock()" />
+
+<APIProperty name="DraggableProps.drag" />
+<APIProperty name="DraggableProps.dragConstraints" />
+<APIProperty name="DraggableProps.dragElastic" />
+<APIProperty name="DraggableProps.dragMomentum" />
+<APIProperty name="DraggableProps.dragTransition" />
+<APIProperty name="DraggableProps.dragPropagation" />
+
+## Types
+
+<APIInterface name="TapInfo" skipnav />
+<APIInterface name="PanInfo" skipnav />

@@ -1,0 +1,33 @@
+{
+    "name": "@framer/api-docs",
+    "version": "1.0.0",
+    "private": true,
+    "devDependencies": {
+        "@microsoft/api-extractor": "7.0.13",
+        "@microsoft/tsdoc": "0.12.4",
+        "@types/chalk": "^2.2.0",
+        "@types/cheerio": "^0.22.11",
+        "@types/classnames": "^2.2.7",
+        "@types/jest": "^24.0.11",
+        "@types/lodash.escape": "^4.0.5",
+        "@types/prismjs": "^1.9.1",
+        "@types/react": "^16.8.2",
+        "@types/react-dom": "^16.8.0",
+        "@types/react-test-renderer": "^16.8.1",
+        "chalk": "^2.4.2",
+        "cheerio": "^1.0.0-rc.2",
+        "chokidar-cli": "^1.2.1",
+        "classnames": "^2.2.6",
+        "framer": "^1.0.0-beta.8",
+        "framer-motion": "^0.14.2",
+        "jest": "^24.3.1",
+        "monobase": "^3.2.2",
+        "prettier": "^1.16.4",
+        "prismjs": "^1.15.0",
+        "react": "^16.8.1",
+        "react-dom": "^16.8.1",
+        "react-test-renderer": "^16.8.4",
+        "ts-jest": "^24.0.0",
+        "ts-node": "^8.0.2"
+    }
+}

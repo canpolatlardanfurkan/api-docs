@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TSDocReactEmitter renders @link tags 1`] = `
+<p>
+  Hello World this is a website: 
+  <a
+    className="DocLinkTag"
+    href="http://example.com"
+  />
+  .
+</p>
+`;
+
+exports[`TSDocReactEmitter renders @link tags with references 1`] = `
+<p>
+  Hello World this is a reference 
+  <a
+    className="DocRefTag"
+    data-link-ref="MyComponent.hello"
+  >
+    <code>
+      MyComponent.hello
+    </code>
+  </a>
+  .
+</p>
+`;
+
+exports[`TSDocReactEmitter renders @link tags with references and text 1`] = `
+<p>
+  Hello World this is a reference 
+  <a
+    className="DocRefTag"
+    data-link-ref="MyComponent.hello"
+  >
+    hello
+  </a>
+  .
+</p>
+`;
+
+exports[`TSDocReactEmitter renders @link tags with text 1`] = `
+<p>
+  Hello World this is an 
+  <a
+    className="DocLinkTag"
+    href="http://example.com"
+  >
+    example
+  </a>
+  .
+</p>
+`;
+
+exports[`TSDocReactEmitter renders a basic string 1`] = `
+<p>
+  Hello World
+</p>
+`;
+
+exports[`TSDocReactEmitter renders a code block 1`] = `
+Array [
+  <p>
+    Hello World
+  </p>,
+  <pre
+    className="DocFencedCode"
+  >
+    <code
+      className="language-jsx line-numbers"
+      data-lang="jsx"
+    >
+      const foo = "bar";
+
+    </code>
+  </pre>,
+]
+`;
+
+exports[`TSDocReactEmitter renders a list of items using asterisks 1`] = `
+Array [
+  <p>
+    Preceding Text
+  </p>,
+  <ul>
+    <li>
+      This is item one 
+    </li>
+    <li>
+      This is item two with 
+      <code
+        className="DocCodeSpan"
+      >
+        code
+      </code>
+       
+    </li>
+    <li>
+      This is item three with a 
+      <a
+        className="DocLinkTag"
+        href="http://example.com"
+      />
+       
+      This is item four with a 
+      <b>
+        Bold Tag
+      </b>
+    </li>
+  </ul>,
+  <p>
+    Trailing Text
+  </p>,
+]
+`;
+
+exports[`TSDocReactEmitter renders a list of items using hyphens 1`] = `
+Array [
+  <p>
+    Preceding Text
+  </p>,
+  <ul>
+    <li>
+      This is item one 
+    </li>
+    <li>
+      This is item two with 
+      <code
+        className="DocCodeSpan"
+      >
+        code
+      </code>
+       
+    </li>
+    <li>
+      This is item three with a 
+      <a
+        className="DocLinkTag"
+        href="http://example.com"
+      />
+       
+      This is item four with a 
+      <b>
+        Bold Tag
+      </b>
+    </li>
+  </ul>,
+  <p>
+    Trailing Text
+  </p>,
+]
+`;
+
+exports[`TSDocReactEmitter renders inline code blocks 1`] = `
+<p>
+  Hello World this is some 
+  <code
+    className="DocCodeSpan"
+  >
+    code
+  </code>
+  .
+</p>
+`;
+
+exports[`TSDocReactEmitter renders several paragraphs 1`] = `
+Array [
+  <p>
+    First Paragraph
+  </p>,
+  <p>
+    Second Paragraph
+  </p>,
+]
+`;
+
+exports[`TSDocReactEmitter supports @params with lists 1`] = `
+<div
+  className="DocParamBlock"
+>
+  options
+   
+  <ul>
+    <li>
+      Clamp values to within the given range. Defaults to 
+      <code
+        className="DocCodeSpan"
+      >
+        true
+      </code>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`TSDocReactEmitter supports a list item ending in code 1`] = `
+<ul>
+  <li>
+    This is an item with 
+    <code
+      className="DocCodeSpan"
+    >
+      code
+    </code>
+  </li>
+</ul>
+`;

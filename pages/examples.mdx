@@ -1,0 +1,415 @@
+<!-- 👋 Editing this file? Need help? → https://github.com/framer/api-docs/blob/master/CONTRIBUTING.md -->
+
+import { Template, Button } from "../components"
+
+export default Template
+
+# Examples
+
+<span className="lead">
+  Simple examples for animation, gestures, components,
+  transforms and more.
+</span>
+
+---
+
+## Animate
+
+<div>
+
+Here, we’re animating the `rotate` property of a `Frame`.
+Then, we’re using the `animate` property to set a new `rotate` property.
+With the `transition` property, we can customize the animation options, like set a custom `duration` of 5 seconds.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/ykppk6k3wv"
+/>
+
+</div>
+
+```jsx highlight(6-9)
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  return (
+    <Frame
+      animate={{ rotate: 360 }}
+      transition={{ duration: 1 }}
+    />
+  )
+}
+```
+
+---
+
+### Loop
+
+<div>
+
+The `transition` property includes a number of properties that allow you to customize the animation.
+In this example, we’ll create an infinitely looping animation.
+Here, we’re setting the `loop` property to `Infinity`, and the `ease` to `linear`, for a perfectly looping animation. This is useful for designing progress indicators, like spinners.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/wqz8n1wk05"
+/>
+
+</div>
+
+```jsx highlight(6-13)
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  return (
+    <Frame
+      animate={{ rotate: 360 }}
+      transition={{
+        duration: 2,
+        loop: Infinity,
+        ease: "linear",
+      }}
+    />
+  )
+}
+```
+
+---
+
+### Cycle
+
+<div>
+
+You can cycle through animations with the `useCycle` method from Framer.
+Here, we’re cycling between 2 sets of properties on every tap.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/xl7nmv46wq"
+/>
+
+</div>
+
+```jsx highlight(2, 5-8, 10)
+import * as React from "react"
+import { Frame, useCycle } from "framer"
+
+export function MyComponent() {
+  const [animate, cycle] = useCycle(
+    { scale: 1.5, rotate: 0 },
+    { scale: 1.0, rotate: 45 }
+  )
+
+  return <Frame animate={animate} onTap={cycle} />
+}
+```
+
+---
+
+### Color
+
+<div>
+
+Color strings can also be animated by using the `background` property. In this example, we’re infinitely animating from light blue to purple and back again (by using the `yoyo` property and setting it to `Infinity`) with a `duration` of 1 second.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/vv8ll0pmk7"
+/>
+
+</div>
+
+```jsx highlight(6-13)
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  return (
+    <Frame
+      animate={{ background: "#85F" }}
+      transition={{
+        duration: 1,
+        yoyo: Infinity,
+      }}
+      background={"#0CF"}
+    />
+  )
+}
+```
+
+---
+
+### Arrays
+
+<div>
+
+Next to single values, you can also animate arrays of values within the `animate` property. In this example, we’re infinitely animating between three different colors (by using the `yoyo` property and setting it to `Infinity`) with a `duration` of 2 seconds.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/o4j24j2zmq"
+/>
+
+</div>
+
+```jsx highlight(6-13)
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  return (
+    <Frame
+      animate={{ background: ["#F05", "#85F", "#0CF"] }}
+      transition={{
+        duration: 2,
+        yoyo: Infinity,
+      }}
+      background={"#0CF"}
+    />
+  )
+}
+```
+
+---
+
+## Gestures
+
+<div>
+
+Let’s start by simply animating a `Frame` when tapping on it.
+We’ll create two constants, a default `rotate` value of `0` and a `setState` method.
+
+Then, a new function that takes the `rotate` value, and adds `90` to it every time.
+Finally, we’ll pass along `rotate` to the `animate` property, and the `toggleRotate` method to `onTap`.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/jlq97yryk9"
+/>
+
+</div>
+
+```jsx highlight(2, 6-7, 9)
+import * as React from "react"
+import { useState } from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  const [rotate, setRotate] = useState(0)
+  const toggleRotate = () => setRotate(rotate + 90)
+
+  return <Frame animate={{ rotate }} onTap={toggleRotate} />
+}
+```
+
+---
+
+### On Hover
+
+<div>
+
+Now, let’s simply scale down a `Frame` when hovering it.
+We can use the `whileHover` property, and pass along a property an its value.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/8zoqqj2x2j"
+/>
+
+</div>
+
+```jsx highlight(5)
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  return <Frame whileHover={{ scale: 0.75 }} />
+}
+```
+
+---
+
+## Dragging
+
+You can easily make any `Frame` draggable with the `drag` property. It can be set to control the drag axis using `"x"` or `"y"`. It can also be dragged in any direction by setting it to `true`.
+
+```jsx highlight(5)
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  return <Frame drag={true} />
+}
+```
+
+---
+
+### Constraints
+
+<div>
+
+To add `contraints` and limit the drag area, you can include the `dragConstraints` property.
+Pass along an object with `top`, `right`, `bottom` and `left` values to define the dragging region.
+
+The values are measured relatively to the current object, so if you wanted to allow for `100` pixels of dragging to the left side of a `Frame`, you would have to add `left: -100`.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/53mv19r5r4"
+/>
+
+</div>
+
+```jsx highlight(6-14)
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  return (
+    <Frame
+      drag={true}
+      dragConstraints={{
+        left: -100,
+        right: 100,
+        top: -100,
+        bottom: 100,
+      }}
+    />
+  )
+}
+```
+
+---
+
+## Scrolling
+
+<div>
+
+For scrolling, you can wrap Frames in a `Scroll` component, to make them automatically scrollable. Make sure the Frame or collection of Frames together exceed either the width or the height of the `Scroll` component. Scrolling direction is set to `"vertical"` by default. The content size is automatically calculated.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/zqk53xj9k3"
+/>
+
+</div>
+
+```jsx highlight(2, 6-10)
+import * as React from "react"
+import { Frame, Scroll } from "framer"
+
+export function MyComponent() {
+  return (
+    <Scroll height={150}>
+      <Frame height={70} />
+      <Frame height={70} top={80} />
+      <Frame height={70} top={160} />
+    </Scroll>
+  )
+}
+```
+
+---
+
+## Paging
+
+<div>
+
+For paging, you can wrap Frames in a `Page` component to make them swipeable. Optionally, custom transition properties can be provided. Swipe direction is set to `"horizontal"` by default. The content size is automatically calculated.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/88j3049zr9"
+/>
+
+</div>
+
+```jsx highlight(2, 6-10)
+import * as React from "react"
+import { Frame, Page } from "framer"
+
+export function MyComponent() {
+  return (
+    <Page>
+      <Frame />
+      <Frame />
+      <Frame />
+    </Page>
+  )
+}
+```
+
+---
+
+## Transforms
+
+<div>
+
+Here, we’re using two custom Hooks in Framer to transform values from one range to another.
+The `useMotionValue` provides an animatable and sharable value, which we’ll use for the `x` position.
+Then, we’ll transform that value from a range of `[-200, 200]` to a range that makes sense for `scale`.
+Finally, we’ll apply both properties to the `Frame`.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/l0061n7v7"
+/>
+
+</div>
+
+```jsx highlight(2, 5-6, 8)
+import * as React from "react"
+import { Frame, useMotionValue, useTransform } from "framer"
+
+export function MyComponent() {
+  const x = useMotionValue(0)
+  const scale = useTransform(x, [-200, 200], [1.5, 0.5])
+
+  return <Frame drag={"x"} x={x} scale={scale} />
+}
+```
+
+---
+
+## Variants
+
+<div>
+
+Variants are collections of visual properties, like states, that you can animate or cycle between.
+For example, buttons usually have a hover state next to their default state.
+On hover, perhaps the `background` and `boxShadow` are changed.
+These properties can be defined in `variants`.
+
+First, we’re defining the variants, which are essentially collections of visual properties. In this case, they’ll each contain a `scale` and a `rotate` value. We’ll call them `variantA` and `variantB` respectively.
+
+Finally, we’re referencing the properties using the `variants` property, and animating to `variantB` on hover with the `whileHover` property.
+
+<Button
+  name="Open Example"
+  link="https://codesandbox.io/s/98vm5qo84"
+/>
+
+</div>
+
+```jsx highlight(5-8, 11-15)
+import * as React from "react"
+import { Frame } from "framer"
+
+export function MyComponent() {
+  const variants = {
+    variantA: { scale: 0.75, rotate: 0 },
+    variantB: { scale: 1.0, rotate: 90 },
+  }
+
+  return (
+    <Frame
+      initial={"variantA"}
+      whileHover={"variantB"}
+      variants={variants}
+    />
+  )
+}
+```

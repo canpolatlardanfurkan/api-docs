@@ -1,0 +1,876 @@
+<!-- 👋 Editing this file? Need help? → https://github.com/framer/api-docs/blob/master/CONTRIBUTING.md -->
+
+import {
+  SliderComplete,
+  SliderImport,
+  SliderStarter,
+  SliderElements,
+  SliderDragging,
+  SliderHooks,
+  SliderData,
+} from "../components/tutorial"
+
+import {
+  Template,
+  Button,
+  CTA,
+  Todo,
+  EmbeddedDemo,
+} from "../components"
+
+export default Template
+
+<div>
+
+# Tutorial
+
+<span className="lead">
+  Learn how to build a fully functional
+  slider&nbsp;component from scratch.
+</span>
+
+In this tutorial, you’ll create a custom slider that combines many of the useful features in the Framer Library with React. The techniques used will give you a high-level overview of the basics. Before you get started, take a look at the example to see what you’ll be building in this tutorial.
+
+</div>
+
+<EmbeddedDemo>
+  <SliderComplete />
+</EmbeddedDemo>
+
+<div className="followed-by-list">
+
+</div>
+
+<div>
+
+## Overview
+
+**What you’ll learn**
+
+- Layout & Visual Properties
+- Dragging Properties
+- Working with React Hooks
+- MotionValue Sharing
+- Setting Default Properties
+- Passing Component Data
+- Transforming MotionValues
+
+As you progress, things will become more advanced so try to get as far as you can. You don’t have to finish all the sections to benefit from this tutorial. Have fun and get help from [our community](https://www.framer.com/community/) if you get stuck.
+
+**Let’s get started.**
+
+</div>
+
+---
+
+## Setup
+
+<div>
+
+We’ve prepared a starter files for Sandbox.io and Framer X with React and the Framer library setup to help you get started quickly.
+
+<Button
+  name="Sandbox Starter File"
+  link="https://codesandbox.io/s/rrlpv8lo3m"
+/>
+
+<span> &nbsp; </span>
+
+<Button
+  name="Framer X Starter File"
+  link="http://static.framer.com/api/tutorial-start.framerx"
+/>
+
+<br /><br />
+
+- **Sandbox:** Open the starter sandbox and create a fork of the sandbox.
+- **Framer X:** Download the project and open in Framer X.
+
+Each setup includes two React starter files: `index.tsx` and `Slider.tsx`. Let’s review the files once you have your tutorial setup and ready to go.
+
+</div>
+
+<EmbeddedDemo internal={true} height={340}>
+  <SliderStarter />
+</EmbeddedDemo>
+
+---
+
+### Index.tsx
+
+<div>
+
+This file is responsible for rendering your entire project. It is also your top level component. Let’s take a look at what we’ve already setup for you.
+
+- First we import `React`, `render` and `Frame` at the top of the file.
+- Then the `App()` component returns a top level SliderApp `Frame` that has width and height set to 100% of the viewport to fill the screen. We also give it a gray background and a name to help identify it.
+- Inside the app `Frame` is a placeholder `Frame` that has a logo image centered with a 4px radius.
+- On the last line, we tell `render()` to place the `App` component into the root tag of your HTML document.
+
+If you’re doing this tutorial in Framer X, this file will not include any references to `render` since Framer handles rendering components for you.
+
+</div>
+
+```tsx
+import * as React from "react"
+import { render } from "react-dom"
+import { Frame } from "framer"
+
+export function App() {
+  return (
+    <Frame
+      name={"SliderApp"}
+      width={"100%"}
+      height={"100%"}
+      background={"#242424"}
+    >
+      <Frame
+        center
+        image={"https://static.framer.com/api/logo.jpg"}
+        radius={4}
+      />
+    </Frame>
+  )
+}
+
+render(<App />, document.getElementById("root"))
+```
+
+---
+
+### Slider.tsx
+
+<div>
+
+This is where your `Slider` component will live. You’ll do most of your work here throughout the tutorial. Select this file to view the code we’ve already setup for you.
+
+- First it imports `React` and `Frame` into the file.
+- Then we export the `Slider` component.
+- The component returns a centered default `Frame`.
+
+</div>
+
+```tsx
+import * as React from "react"
+import { Frame } from "framer"
+
+export function Slider() {
+  return <Frame center />
+}
+```
+
+---
+
+## Import Slider
+
+<div>
+
+As you build the Slider component it will be helpful to visualize your work and see updates in realtime. To use the `Slider` component in the app you will first need to import it.
+
+After you import `Slider`, if you reach end of this section and see a blue box, you have set it up correctly.
+
+</div>
+
+<EmbeddedDemo internal={true} height={240}>
+  <SliderImport />
+</EmbeddedDemo>
+
+---
+
+### Import Slider Component
+
+<div>
+
+Your `App` component needs to know about the `Slider` component so it can be used. This can be done with a simple one line import.
+
+- Open the `index.tsx` file.
+- Add the `Slider` import at the top with a relative path to the slider component.
+
+</div>
+
+```tsx  highlight(4)
+import * as React from "react"
+import { render } from "react-dom"
+import { Frame } from "framer"
+import { Slider } from "./Slider"
+```
+
+---
+
+### Display Slider Component
+
+<div>
+
+Now that you have imported the component into your `index.tsx` file, replace the placeholder logo `Frame` with your `Slider` component.
+
+- Remove the centered placeholder logo `Frame`.
+- Add the `Slider` component tag inside the SliderApp `Frame` tag.
+
+You should be able to see the `Slider` component now. **Great!** It’s currently just a default blue `Frame`—not very exciting— so let’s get started building the pieces of the Slider component.
+
+</div>
+
+```tsx highlight(1-2, 6-8)
+<Frame
+  name={"SliderApp"}
+  width={"100%"}
+  height={"100%"}
+  background={"#242424"}
+>
+  <Slider />
+</Frame>
+```
+
+---
+
+## Slider Elements
+
+<div>
+
+The first thing you need to do is create the visual elements that make up the slider. You’ll use `Frame` to compose the elements needed for the slider and its properties to position and style it.
+
+A slider is composed of a **rail**, a **draggable knob** that moves along the rail and a **fill color** that follows the knob while dragging. The fill adds visual contrast to each side of the knob and helps convey its value.
+
+Open up the `Slider.tsx` file and let’s dig in.
+
+</div>
+
+<EmbeddedDemo internal={true} height={300}>
+  <SliderElements />
+</EmbeddedDemo>
+
+---
+
+### Create a Rail
+
+<div>
+
+In `Slider.tsx` the first element you’ll start with is the rail that the slider knob will sit on top of. You need to change the existing `Frame` properties to look like a rail.
+
+You’ll want to add a fixed width / height and center the rail position. Then add some nice rounded ends using border radius and a 20% opacity white color for the background.
+
+</div>
+
+```tsx
+<Frame
+  name={"Rail"}
+  width={130}
+  height={6}
+  center
+  radius={3}
+  background={"rgba(255,255,255,.2)"}
+/>
+```
+
+---
+
+### Create a Knob
+
+<div>
+
+Now that you have the rail, add the knob that sits on top of it. You’ll want to add the knob inside of the rail so you will first need to make a few code adjustments.
+
+- Change the rail `Frame` from self-closing to a closing-tag format.
+- Add a new `Frame` tag for your knob inside the rail `Frame` tag.
+
+Now that your structure is set up, add properties to your new Knob `Frame`.
+
+The knob should be rounded and centered vertically on the `y` axis of the rail. To add contrast and depth, add a white background color and a shadow so it apears to float above the rail.
+
+You also want the **middle** of the knob to sit at the left edge of the rail. To do this, offset the `left` property by subtracing half the width of the knob.
+
+</div>
+
+```tsx highlight(1-2, 8-18)
+<Frame
+  name={"Rail"}
+  width={130}
+  height={6}
+  center
+  radius={3}
+  background={"rgba(255,255,255,.2)"}
+>
+  <Frame
+    name={"Knob"}
+    size={40}
+    center={"y"}
+    radius={"50%"}
+    background={"#fff"}
+    shadow={"0 2px 8px 1px #242424"}
+    left={-20}
+  />
+</Frame>
+```
+
+---
+
+### Create a Fill
+
+<div>
+
+The last element you need is the fill color that will follow the knob as you slide it. You want the knob to sit above the fill color so the order of each `Frame` is important.
+
+- Add a new `Frame` tag for your fill color inside the rail `Frame` tag.
+- Ensure the fill `Frame` is before the knob `Frame` so it sits under the knob.
+
+The fill should have a background color of white and a height and radius that matches the rail. For now, to see the fill, set its width to half of the rail width. This won’t look correct initially but you will fix this in the upcoming steps.
+
+Now that you have all the elements of a slider, its time to add dragging to the knob and get the fill working properly.
+
+</div>
+
+```tsx highlight(5-11)
+<Frame
+  name={"Rail"}
+  ...
+>
+  <Frame
+    name={"Fill"}
+    width={65}
+    height={6}
+    radius={3}
+    background={"#fff"}
+  />
+  <Frame
+    name={"Knob"}
+    ...
+  />
+</Frame>
+```
+
+---
+
+## Drag & MotionValue
+
+When the knob is dragged, its position on the `x` axis will be the value you want for the width of your fill `Frame`. It will also be helpful to later calculate the value for the slider. To allow the knob to react to user input, you need to add some `drag` properties and connect it up to a special `MotionValue` variable.
+
+<EmbeddedDemo internal={true} height={220}>
+  <SliderDragging />
+</EmbeddedDemo>
+
+---
+
+### Add Knob Dragging
+
+<div>
+
+First, you need to set `drag` for the `x` axis so users can press and drag the knob side-to-side. To limit the movement of the knob, you should also constrain the knob horizontally to the width of the rail using the `dragConstraints` property.
+
+To improve the feel when dragging the knob at the edges and during release, you’ll need to disable `dragElastic` and `dragMomentum`.
+
+The knob will now travel from edge-to-edge of the rail with the `x` position ranging from 0 to 130, as defined by your constraints. To capture this position and use it you need to connect it to a `MotionValue` variable.
+
+</div>
+
+```tsx highlight(1,2, 9-13)
+<Frame
+  name={"Knob"}
+  size={40}
+  center={"y"}
+  radius={"50%"}
+  background={"#fff"}
+  shadow={"0 2px 8px 1px #242424"}
+  left={-20}
+  drag={"x"}
+  dragConstraints={{ left: 0, right: 130 }}
+  dragElastic={0}
+  dragMomentum={false}
+/>
+```
+
+---
+
+### Add MotionValue
+
+<div>
+
+To add a `MotionValue` you first need to do an import at the top of your `Slider` component. Once imported, you are ready to put it to use.
+
+- Update the `Frame` import to include `useMotionValue`.
+- Add a variable named `position` with an initial value of `0` using `useMotionValue()`.
+
+You now have a powerful `MotionValue` variable named `position` that can track the state and velocity of a single number value. If your `position` variable is given as a value for a property on a `Frame`, such as a `x` position, when a drag occurs causing the `x` position to change, your `position` variable will immediately update to that new value.
+
+This new `MotionValue` variable will be quite useful in allowing you to keep your fill `Frame` and knob `Frame` in sync. You’ll set that up next.
+
+</div>
+
+```tsx highlight(2,5)
+import * as React from "react";
+import { Frame, useMotionValue } from "framer";
+
+export function Slider() {
+  const position = useMotionValue(0);
+  return (
+    <Frame name={"Rail"}
+      ...
+    >
+      <Frame
+        name={"Fill"}
+        ...
+      />
+      <Frame
+        name={"Knob"}
+        ...
+      />
+    </Frame>
+  );
+}
+```
+
+---
+
+### Sharing MotionValue
+
+<div>
+
+To get the fill `Frame` and knob `Frame` to stay in sync they just need to share the `position` variable. Set your new `MotionValue` variable `position` as the `width` of the fill `Frame`. Also, add a `x` postion to your knob `Frame` and use `position` as the value too.
+
+You’ll notice once you do this, the fill and knob are finally in sync during a drag interaction. A drag on the knob causes it’s `x` value to change, and since we gave the knob a `MotionValue` for the `x` property, the `position` variable gets updated whenever that change occurs. That means the `width` of the fill `Frame` will update because it uses `position` as well.
+
+This whole process occurs outside of the React lifecycle to keep things performant and avoids asking the component to re-render. This is pretty powerful in only a few lines of code. **Awesome!**
+
+</div>
+
+```tsx highlight(5-7,9-12,14)
+    <Frame
+      name={"Rail"}
+      ...
+    >
+      <Frame
+        name={"Fill"}
+        width={position}
+        ...
+      />
+      <Frame
+        name={"Knob"}
+        x={position}
+        ...
+      />
+    </Frame>
+```
+
+---
+
+## Hooks & Passing Data
+
+<div>
+
+You now have a functioning `Slider` component but its not of much use yet. It does the basic job that a slider should, except that it needs to control something.
+
+Let’s create a profile image `Frame` that will get state updates from the `Slider` to control its scale. To do this, you’ll want to add an image `frame` and use React Hooks to manage the state of the image scale.
+
+Hooks are new helper functions that allow you to “hook into” React state and lifecycle features from your components.
+
+</div>
+
+<EmbeddedDemo internal={true} height={330}>
+  <SliderData />
+</EmbeddedDemo>
+
+---
+
+### Create Profile Image
+
+<div>
+
+Visually the profile image will lay underneath your `Slider` component. That’s okay for now. You’ll fix it in later steps when you add a mask to the image.
+
+- Open the `index.tsx` file.
+- Inside your SliderApp `Frame` but before the `Slider` component, insert your profile image `Frame`.
+
+The image `Frame` will be set to `center` and have a scale of 25%. It will also have a width and height of 480px set using the `size` property.
+
+</div>
+
+```tsx highlight(5-11)
+<Frame
+  name={"SliderApp"}
+  ...
+>
+  <Frame
+    name={"Image"}
+    scale={0.25}
+    center
+    size={480}
+    image={"https://static.framer.com/api/bg.jpg"}
+  />
+  <Slider />
+</Frame>
+```
+
+---
+
+### Add & Apply Scale Hook
+
+<div>
+
+React provides a few built-in Hooks like `useState`. That’s what you’ll use to update and apply the scale state on each re-render.
+
+The `useState` Hook returns a pair: the current state value and a function to update the state value. It also accepts an argument for an initial state value during setup. When calling `useState`, use array destructuring to give names to your state variable and your update function.
+
+Near the top of your `App` component, create your Hook variables and name the current state `scale` and the update function `setScale`. Also, give the `scale` state an inital value of `0.5`. Then assign the value of the `scale` state to the `scale` property of the profile image `Frame`.
+
+The `Slider` component won’t control the profile image quite yet. You need to add some new properties to the `Slider` and implement them.
+
+</div>
+
+```tsx highlight(2, 8-10, 12)
+export function App() {
+  const [scale, setScale] = React.useState(0.5);
+  return (
+    <Frame
+      name={"SliderApp"}
+      ...
+    >
+      <Frame
+        name={"Image"}
+        scale={scale}
+        ...
+      />
+      <Slider />
+    </Frame>
+  );
+}
+```
+
+---
+
+### Setup Slider Properties
+
+<div>
+
+To do its job well, your `Slider` component needs to allow you to set a default value, set a min and max value range and allow you to update your `scale` state value when the knob position changes.
+
+Your `Slider` needs a default `value` property set to your new `scale` state. Also, add `min` and `max` properties so it will output values from `0.25` to `0.75`. To get updates, add an `onChange` property and give it a handler `function` with an argument called `newValue`. Inside the function, call your new hook state function `setScale()` with the `newScale` value.
+
+These properties allow you to setup your `Slider` and update the `scale` value of the image `Frame`. You will likely see an error though. They don’t exist in your `Slider` component yet and you need to implement them.
+
+</div>
+
+```tsx highlight(9-16)
+<Frame
+  name={"SliderApp"}
+  ...
+>
+  <Frame
+    name={"Image"}
+    ...
+  />
+  <Slider
+    value={scale}
+    min={0.25}
+    max={0.75}
+    onChange={function(newValue) {
+      setScale(newValue)
+    }}
+  />
+</Frame>
+```
+
+---
+
+### Implement Slider Properties
+
+<div>
+
+To allow the `Slider` to use the properties added to the `Slider` tag in your `App` component, you’ll need to add them to your component.
+
+- Open the `Slider.tsx` file.
+- At the top of the `Slider` function component add an object with properties for its argument.
+- Update the initial `position` value to use the `value` property.
+
+Set the property fallback values to be `0` for the default `value`, set `0` for the `min` and `1` for the `max`. This means if the properties aren’t set on the component, the knob will start at the left most position with a value of 0 and when dragged to the far most right it will have a value of 1.
+
+Add the `onChange` property without a fallback value. Later on you’ll check to see if anything is passed to this property before you use it to avoid unnecessary calls and errors.
+
+Now that you have a default `value` property, use it to set the knob and fill by changing the initial `position` state value in `useMotionValue`. Multiply the width of the `Slider` with the percentage based `value` property.
+
+All errors are gone. **Woo!** In the next few steps you’ll get the `onChange` property sending updates to your `scale` state.
+
+</div>
+
+```tsx highlight(1-7)
+export function Slider({
+  min = 0,
+  max = 1,
+  value = 0,
+  onChange
+}) {
+  const position = useMotionValue(value * 130);
+  return (
+    <Frame
+      name={"Rail"}
+      ...
+    >
+      <Frame
+        name={"Fill"}
+        ...
+      />
+      <Frame
+        name={"Knob"}
+        ...
+      />
+    </Frame>
+  );
+}
+
+```
+
+---
+
+### Import Transformer
+
+<div>
+
+Before sending `Slider` updates with `onChange`, you’ll need to import a tool to help convert your `MotionValue` variable `position` to a value in the range of the `min` and `max` properties.
+
+- In `Slider.tsx` add `useTransform` to the Framer import
+
+Now that you have the `useTransform()` function imported, let’s put it to work and call `onChange` with the new value.
+
+</div>
+
+```tsx highlight(2-6)
+import * as React from "react"
+import { Frame, useMotionValue, useTransform } from "framer"
+```
+
+---
+
+### Transform & Update State
+
+<div>
+
+First create `newValue` to store your transformed value. To use `useTransform()` provide it with a `MotionValue` to transform and define two arrays as a range of your input and output values.
+
+The input range `[0,130]` represents the left and right edges on which the knob will travel. The output range `[min,max]` represents the `min` and `max` properties of the `Slider` component.
+
+When calling `useTransform()` you’re creating a new `MotionValue` variable that is subscribed to the `MotionValue` variable `position`. This means that each time the `position` value changes, it will be transformed and assigned to `newValue`.
+
+To pass the transformed `newValue` back to the image `Frame` use the `onDrag` event handler on the knob `Frame`. The `onDrag` property allows you to execute a chunk of code expressed as a `function` each time you move the knob. Inside the function do a quick check to ensure that `onChange` exists since it doesn’t have a fallback value. This helps you avoid errors when you don’t have fallbacks.
+
+You can now call the `onChange()` property safely with `newValue.get()`. Since `newValue` is a special `MotionValue` variable we need to explicity ask for it’s value using `get()`. Doing this sends `newValue` all the way back to the `setScale` state hook provided in the `onChange` property of your `Slider` component in `index.tsx`.
+
+**Booyah!** The `Slider` knob updates the scale of the image.
+
+</div>
+
+```tsx highlight(8, 18-19, 21-24)
+export function Slider({
+  min = 0,
+  max = 1,
+  value = 0,
+  onChange
+}) {
+  const position = useMotionValue(value * 130);
+  const newValue = useTransform(position,[0,130],[min,max]);
+  return (
+    <Frame
+      name={"Rail"}
+      ...
+    >
+      <Frame
+        name={"Fill"}
+        ...
+      />
+      <Frame
+        name={"Knob"}
+        ...
+        onDrag={function() {
+          if (onChange) onChange(newValue.get());
+        }}
+      />
+   </Frame>
+  );
+}
+```
+
+---
+
+## Finishing Up
+
+<div>
+
+Now that your `Slider` is functional, let’s add some polish.
+
+You’ll add a mask frame around your profile image and move it above the slider. If your image is scaled, you’ll want to add dragging to your image, so you can select the area of the image you want visible inside the mask.
+
+Let’s open `index.tsx` to add some final touches.
+
+</div>
+
+<EmbeddedDemo internal={true} height={280}>
+  <SliderComplete />
+</EmbeddedDemo>
+
+---
+
+### Adding Image Mask
+
+<div>
+
+To create the mask, you’ll add a `Frame` that wraps around the existing profile image `Frame`.
+
+The mask `Frame` is a 120px circle that is centered but offset on the `y` axis by -100px. This moves the mask `Frame` away from the `Slider`. To mask the image `Frame`, set the `overflow` property to `"hidden"` to ensure the image is hidden outside of the circle mask `Frame`.
+
+This will mask your image but, when its scaled you will only be able to view the center of the image. Let’s change this so you can view any area of the image at any scale.
+
+</div>
+
+```tsx highlight(1-10, 12-13)
+<Frame
+  name={"Mask"}
+  size={120}
+  center
+  y={"-100px"}
+  overflow={"hidden"}
+  radius={"50%"}
+>
+  <Frame
+    name={"Image"}
+    ...
+  />
+</Frame>
+```
+
+---
+
+### Add Image Dragging
+
+<div>
+
+Add dragging to the image using the `drag` property. To get the feel like you have for the knob in the `Slider` component, disable both `dragElastic` by setting the threshold to `0` and setting `dragMomentum` to `false`.
+
+You can now drag the image `frame` inside the mask, but there is one last problem. The image can be dragged outside the bounds of the mask `Frame`.
+
+</div>
+
+```tsx highlight(1-2, 4-7)
+<Frame
+  name={"Image"}
+  ...
+  drag
+  dragElastic={0}
+  dragMomentum={false}
+/>
+
+```
+
+---
+
+### Drag Constraints
+
+<div>
+
+To keep the image `Frame` always within the bounds of the mask `Frame` you’ll need to use the `dragConstraints` property again.
+
+Since the `scale` state value can change any time the `Slider` knob is dragged, you’ll want to calculate your `constraint` variable using the `scale` value each time it changes.
+
+Set the variable equal to the image `Frame` size (480) times the `scale` state value, minus the mask `Frame` size (120), then divide that result in half. This gives us a value you can give to `dragConstraints` for the `top`, `bottom`, `left` and `right` values.
+
+By setting the `dragConstraints` this way you are telling image `Frame` to not let dragging occur for half of whatever excess in size remains when the mask size is subtracted. You cut it in half because you apply it to both ends, vertically and horizontally.
+
+Now when you drag your image `Frame` you’ll notice, no matter what the size, the image `Frame` is always contained within the mask `Frame`.
+
+</div>
+
+```tsx highlight(3, 7-8, 13-19)
+export function App() {
+  const [scale, setScale] = React.useState(0.5);
+  const constraint = (480 * scale - 120) / 2;
+  return (
+    <Frame name={"SliderApp"} ... >
+      <Frame name={"Mask"} ... >
+        <Frame
+          name={"Image"}
+          ...
+          drag
+          dragElastic={0}
+          dragMomentum={false}
+          dragConstraints={{
+            top: -constraint,
+            bottom: constraint,
+            left: -constraint,
+            right: constraint
+          }}
+        />
+      </Frame>
+      <Slider ... />
+    </Frame>
+  );
+}
+```
+
+---
+
+## Review
+
+<div>
+
+🎉 **Congrats!** You’ve reached the end of this tutorial. You created a fully functional custom slider from scratch by combining many of the useful features in the Framer Library and React. Nice work!
+
+Below are completed tutorial files which may be helpful if you ran into any issues along the way or simply want to compare them with your code.
+
+<Button
+  name="Sandbox Completed Tutorial"
+  link="https://codesandbox.io/s/xv4vm26jzp"
+/>
+
+<span> &nbsp; </span>
+
+<Button
+  name="Framer X Completed Tutorial"
+  link="http://static.framer.com/api/tutorial-complete.framerx"
+/>
+</div>
+<div>
+
+If you’d like to keep going, check out the sections below for [extra credit](#extra-credit) ideas to take this tutorial further, links to [resources](#resources) of topics we touched on, and more [Framer examples](#additional-examples).
+
+</div>
+
+---
+
+### Extra Credit
+
+If you’d like to take this tutorial even further, here are a few visual examples and some other ideas for you to try out on your own.
+
+- [Draggable Ghosted Image Outside Mask ›](https://ql3yykq6r6.codesandbox.io)
+- [Draggable Image Outline Outside Mask ›](https://w71xkp0rjl.codesandbox.io)
+- [Rail Click Adjusts Slider & Scale ›](https://rm2plx9wop.codesandbox.io)
+- Scale & Rotation Slider Controls
+- Vertical Slider
+- Add Custom Slider Layout, Size & Style Properties
+
+Use what you’ve learned here in this tutorial and with info available in these Framer Library API docs to see how far you can extend what you’ve learned.
+
+---
+
+### Community Showcase
+
+If you’ve extended the tutorial and want us to share what you’ve created, post your example online in our [Framer community](https://www.framer.com/community/) tagged with **#FramerExtraCredit**.
+
+- [Dynamic Inset Slider ›](https://codesandbox.io/s/yw96q89y2j) by **Jordan Dobson**
+- [Photo Filter with Labels & Custom Color ›](https://codesandbox.io/s/0xzyjn52nn) by **Freddie Iboy**
+
+---
+
+### Resources
+
+During this tutorial we touched on quite a few different features in Framer and React. Here’s a collection of resources for you to explore to learn more.
+
+- [**Framer:** Drag Properties & Events](/api/frame/#drag)
+- [**Framer:** MotionValue](</api/animation/#(motionvalue:class)>)
+- [**Framer:** useMotionValue()](/api/animation/#usemotionvalue)
+- [**Framer:** useTransform()](/api/animation/#usetransform)
+- [**React:** Hooks ›](https://reactjs.org/docs/hooks-overview.html)
+- [**React:** Components and Props ›](https://reactjs.org/docs/components-and-props.html)
+- [**React:** Using Import ›](https://reactjs.org/docs/code-splitting.html#import)
+- [Array Destructuring ›](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
+
+---
+
+### Additional Examples
+
+If you’d like to see some more examples on animation, gestures, dragging, paging, scrolling and more [visit our examples](/api/examples/) section for detailed explanations and code samples.

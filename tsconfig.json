@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["es2015", "es2017.object", "dom"],
+        "module": "commonjs",
+        "jsx": "react",
+        "baseUrl": ".",
+        "resolveJsonModule": true,
+        "outDir": "build",
+        "downlevelIteration": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "exclude": ["node_modules/**/*", "build/**/*"]
+}

@@ -1,0 +1,31 @@
+@font-face {
+    font-family: Input;
+    font-weight: 500;
+    src: url("../fonts/InputMonoRegular.woff2") format("woff2"), url("../fonts/InputMonoRegular.woff") format("woff");
+}
+@font-face {
+    font-family: Input;
+    font-weight: 600;
+    src: url("../fonts/InputMonoMedium.woff2") format("woff2"), url("../fonts/InputMonoMedium.woff") format("woff");
+}
+@font-face {
+    font-family: Colfax;
+    font-weight: 300;
+    src: url("../fonts/ColfaxWebLight.woff2") format("woff2"), url("../fonts/ColfaxWebLight.woff") format("woff");
+}
+
+@font-face {
+    font-family: Colfax;
+    font-weight: 400;
+    src: url("../fonts/ColfaxWebRegular.woff2") format("woff2"), url("../fonts/ColfaxWebRegular.woff") format("woff");
+}
+@font-face {
+    font-family: Colfax;
+    font-weight: 500;
+    src: url("../fonts/ColfaxWebMedium.woff2") format("woff2"), url("../fonts/ColfaxWebMedium.woff") format("woff");
+}
+@font-face {
+    font-family: Colfax;
+    font-weight: 600;
+    src: url("../fonts/ColfaxWebBold.woff2") format("woff2"), url("../fonts/ColfaxWebBold.woff") format("woff");
+}

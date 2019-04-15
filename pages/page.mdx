@@ -1,0 +1,78 @@
+<!-- 👋 Editing this file? Need help? → https://github.com/framer/api-docs/blob/master/CONTRIBUTING.md -->
+
+import {
+  Template,
+  APIReactComponent,
+  APIMergedInterface,
+  APIProperty,
+  APIMethod,
+  APIEnumField,
+  APIEnum,
+} from "../components"
+
+export default Template
+
+# Page
+
+<span className="lead">
+  The Page Component allows you to create horizontally or
+  vertically swipeable areas
+</span>
+
+<div>
+
+The Page Component is based on a `Frame`, which means that it supports **all Frame properties**. Add Frames to a `Page` to create pages to swipe between. They will be stretched to the size of the page component by default, but can also be set to `auto`, to maintain their original size.
+
+- Create horizontal or vertical pages
+- Create scrollable lists that snap to content
+- Use custom transitions like 3D and Pile
+
+</div>
+
+```jsx
+import * as React from "react"
+import { Frame, Page } from "framer"
+
+export function MyComponent() {
+  return (
+    <Page>
+      <Frame>A</Frame>
+      <Frame>B</Frame>
+      <Frame>C</Frame>
+    </Page>
+  )
+}
+```
+
+---
+
+## Content
+
+<APIProperty name="PageProperties.alignment" />
+<APIProperty name="PageProperties.animateCurrentPageUpdate" />
+<APIProperty name="PageProperties.contentWidth" />
+<APIProperty name="PageProperties.currentPage" />
+<APIProperty name="PageProperties.draggingEnabled" />
+<APIProperty name="PageProperties.defaultEffect" />
+<APIProperty name="PageProperties.gap" />
+<APIProperty name="PageProperties.momentum" />
+
+## Padding
+
+<APIProperty name="PageProperties.padding" />
+<APIProperty name="PageProperties.paddingTop" />
+<APIProperty name="PageProperties.paddingRight" />
+<APIProperty name="PageProperties.paddingBottom" />
+<APIProperty name="PageProperties.paddingLeft" />
+
+## Events
+
+<APIMethod name="PageEvents.onChangePage()" />
+
+## Effects
+
+<APIEnumField name="PageEffect.None" />
+<APIEnumField name="PageEffect.CoverFlow" />
+<APIEnumField name="PageEffect.Cube" />
+<APIEnumField name="PageEffect.Pile" />
+<APIEnumField name="PageEffect.Wheel" />

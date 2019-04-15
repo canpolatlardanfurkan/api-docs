@@ -1,0 +1,95 @@
+<!-- 👋 Editing this file? Need help? → https://github.com/framer/api-docs/blob/master/CONTRIBUTING.md -->
+
+import {
+  Template,
+  APIEnum,
+  APIMethod,
+  APIFunction,
+  APIProperty,
+  APIInterface,
+} from "../components"
+
+export default Template
+
+# Color
+
+<span className="lead">
+  Helper functions that allow you to define, manipulate,
+  mix, compare and convert colors.
+</span>
+
+<div>
+
+The `Color` function allows you to quickly define and edit color values.
+Here, we’re defining a blue color, dynamically making it lighter, and then applying the converted color value to a `Frame`.
+
+To apply the color, we’re first converting it to a string value.
+The returned `hex` string value is `#3377FF`.
+These modification and conversion functions are especially useful when working with larger color schemes, and for subtly altering base colors with visual states like `hover`.
+
+</div>
+
+```jsx
+import * as React from "react"
+import { Frame, Color } from "framer"
+
+export function MyComponent() {
+  const darkBlue = Color("#0055FF")
+  const blue = Color.lighten(darkBlue, 10)
+
+  return (
+    <Frame
+      background={Color.toHexString(blue)}
+      size="100%"
+    />
+  )
+}
+```
+
+---
+
+## Create
+
+<APIFunction name="Color()" />
+<APIFunction name="Color.random()" />
+
+## Modify
+
+<APIFunction name="(Color:namespace).alpha()" />
+<APIFunction name="(Color:namespace).brighten()" />
+<APIFunction name="(Color:namespace).darken()" />
+<APIFunction name="(Color:namespace).desaturate()" />
+<APIFunction name="(Color:namespace).difference()" />
+<APIFunction name="(Color:namespace).grayscale()" />
+<APIFunction name="(Color:namespace).hueRotate()" />
+<APIFunction name="(Color:namespace).interpolate()" />
+<APIFunction name="(Color:namespace).lighten()" />
+<APIFunction name="(Color:namespace).mix()" />
+<APIFunction name="(Color:namespace).multiplyAlpha()" />
+<APIFunction name="(Color:namespace).saturate()" />
+<APIFunction name="(Color:namespace).transparent()" />
+
+## Convert
+
+<APIFunction name="(Color:namespace).toHex()" />
+<APIFunction name="(Color:namespace).toHexString()" />
+<APIFunction name="(Color:namespace).toHsl()" />
+<APIFunction name="(Color:namespace).toHslString()" />
+<APIFunction name="(Color:namespace).toHsv()" />
+<APIFunction name="(Color:namespace).toHsvString()" />
+<APIFunction name="(Color:namespace).toHusl()" />
+<APIFunction name="(Color:namespace).toName()" />
+<APIFunction name="(Color:namespace).toRgb()" />
+<APIFunction name="(Color:namespace).toRgbString()" />
+<APIFunction name="(Color:namespace).toString()" />
+
+## Compare
+
+<APIFunction name="(Color:namespace).inspect()" />
+<APIFunction name="(Color:namespace).isColor()" />
+<APIFunction name="(Color:namespace).isColorObject()" />
+<APIFunction name="(Color:namespace).isColorString()" />
+
+## Models
+
+<APIEnum name="ColorMixModelType" skipnav />

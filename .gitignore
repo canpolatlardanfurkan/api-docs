@@ -1,0 +1,4 @@
+.DS_Store
+build
+components/framer.data.ts
+node_modules

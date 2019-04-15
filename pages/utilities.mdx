@@ -1,0 +1,292 @@
+<!-- 👋 Editing this file? Need help? → https://github.com/framer/api-docs/blob/master/CONTRIBUTING.md -->
+
+import {
+  Template,
+  APIReactComponent,
+  APIMergedInterface,
+  APIProperty,
+  APIMethod,
+  APIFunction,
+} from "../components"
+
+export default Template
+
+# Utilities
+
+<span className="lead">
+  Utilities provide simple helper methods and properties for
+  advanced prototyping needs.
+</span>
+
+---
+
+## Transform
+
+<APIFunction name="(transform:function)" />
+
+---
+
+### Ranges
+
+<div>
+
+The `transform` method also supports ranges of more than 2 numbers. Given an input range of `[-200, -100, 100, 200]` and an output range of `[0, 1, 1, 0]`, this function will:
+
+- If input is between `-200` and `-100`, return a value between `0` and `1`
+- If input is between `-100` and `100`, return `1`
+- If input is between `100` and `200`, return a value between `1` and `0`
+
+</div>
+
+```jsx highlight(2, 5-9)
+import * as React from "react"
+import { Frame, transform } from "framer"
+
+export function MyComponent() {
+  const inputRange = [-200, -100, 100, 200]
+  const outputRange = [0, 1, 1, 0]
+  const output = transform(150, inputRange, outputRange)
+  // output equals 0.5
+  return <Frame>{output}</Frame>
+}
+```
+
+---
+
+<APIFunction name="(transform:1)" />
+
+## useTransform
+
+<APIFunction name="useTransform()" />
+
+---
+
+### Transforming Ranges
+
+<div>
+
+You can also use this hook to convert ranges of numeric values based on user input.
+In this example, we `Frame` that is horizontally draggable.
+
+The `x` value starts at `0`, and we’re converting the horizontal movement of the `Frame` from `0 - 200` into `1 - 0.5`, a range that is acceptable for `scale`. Both the `x` and the `scale` values then get set on the `Frame`, too.
+
+</div>
+
+```jsx highlight(2-6, 9-10, 12)
+import * as React from "react"
+import {
+  Frame,
+  useMotionValue,
+  useTransformedValue,
+} from "framer"
+
+export function MyComponent() {
+  const x = useMotionValue(0)
+  const scale = useTransformedValue(x, [0, 200], [1, 0.5])
+
+  return <Frame drag={"x"} x={x} scale={scale} />
+}
+```
+
+---
+
+## useAnimation
+
+<APIFunction name="useAnimation()" />
+
+---
+
+### Sequence
+
+<div>
+
+Animations can be sequenced using `async` functions, allowing you to chain animations with different sets of properties. The `start` method returns a `Promise`.
+
+In this example, we’re moving a `Frame` four times in a row on every single tap, passing in unique properties after every previous animation has been completed.
+
+</div>
+
+```jsx highlight(2, 5, 7-12, 14)
+import * as React from "react"
+import { Frame, useAnimation } from "framer"
+
+export function MyComponent(props) {
+  const animation = useAnimation()
+
+  async function sequence() {
+    await animation.start({ left: 100 })
+    await animation.start({ top: 100 })
+    await animation.start({ left: 0 })
+    await animation.start({ top: 0 })
+  }
+
+  return <Frame animate={animation} onTap={sequence} />
+}
+```
+
+---
+
+### Dynamic Start
+
+<div>
+
+A function can be passed to `start` to return a different set of animation settings for every animating component. Each component will provide the function with its properties.
+
+In this example, we’re passing along the `i` parameter, which we set on the components manually. It’s used to create unique delays for each `Frame`, which will be `0.5` for the first component, and `1` for the second. This effectively creates a controlled staggered animation.
+
+Finally, we’re adding some default visual properties like `opacity`, `size` and `background` that allow us to visualize the effect.
+
+</div>
+
+```javascript highlight(2, 5, 7-10, 13-28)
+import * as React from "react"
+import { Frame, useAnimation } from "framer"
+
+export function MyComponent(props) {
+  const animation = useAnimation()
+
+  animation.start(({ i }) => ({
+    opacity: 1,
+    transition: { delay: i * 0.5 },
+  }))
+
+  return (
+    <Frame background="#09F">
+      <Frame
+        i={0}
+        opacity={0}
+        animate={animation}
+        size={50}
+        background={"rgba(255,255,255,0.5)"}
+      />
+      <Frame
+        i={1}
+        opacity={0}
+        animate={animation}
+        size={50}
+        background={"rgba(255,255,255,0.25)"}
+      />
+    </Frame>
+  )
+}
+```
+
+---
+
+### Variants
+
+The `useAnimation` function can optionally accept variants, and can be referenced later by `start`.
+
+```jsx
+const animation = useAnimation({
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
+})
+
+animation.start("visible")
+```
+
+---
+
+### Stopping Animations
+
+All currently active animations can be stopped with `animation.stop()`.
+
+```jsx
+animation.stop()
+```
+
+---
+
+## useCycle
+
+<APIFunction name="useCycle()" />
+
+---
+
+### Cycle with Animate
+
+Cycle can also be used with the `animate` property.
+Here we’re passing along objects with multiple properties, instead of single property.
+Then, instead of referencing a specific property on `animate`, we’re just referencing the object, and cycling between the states with `cycleAnimate`.
+
+```jsx highlight(2, 5-8, 10)
+import * as React from "react"
+import { Frame, useCycle } from "framer"
+
+export function MyComponent() {
+  const [animate, cycle] = useCycle([
+    { rotate: 90, scale: 0.5 },
+    { rotate: 0, scale: 1 },
+  ])
+
+  return <Frame animate={animate} onTap={() => cycle()} />
+}
+```
+
+---
+
+### Change Initial State
+
+By default, the initial state is the first item in the provided array.
+By passing a different index as the second argument, `useCycle` can start on a different item in the array. Please note that the `index` value of an array starts at `0`.
+
+```jsx highlight(2, 5-6,8)
+import * as React from "react"
+import { Frame, useCycle } from "framer"
+
+export function MyComponent() {
+  // Start x at 100
+  const [x, cycleX] = useCycle([0, 50, 100], 2)
+
+  return <Frame animate={{ x }} onClick={() => cycleX()} />
+}
+```
+
+---
+
+### Cycle to a Specific State
+
+<div>
+
+The returned `cycleState` function, by default, cycles to the next item in the provided array.
+Optionally, it accepts an index that will cycle to a specific item in the array.
+In this example, we’ve used `variants` and passed along the names of each variant, instead of directly including the properties.
+
+Here, it will always cycle to the `off` state, because we’ve passed along the index of `0` to the `cycleToggle` function. If we were to remove it, it would cycle between `off` and `on` again.
+
+</div>
+
+```jsx highlight(2, 5-8, 10, 13-17)
+import * as React from "react"
+import { Frame, useCycle } from "framer"
+
+export function MyComponent() {
+  const variants = {
+    off: { opacity: 0.5 },
+    on: { opacity: 1.0 },
+  }
+
+  const [toggle, cycleToggle] = useCycle(["off", "on"], 1)
+
+  return (
+    <Frame
+      variants={variants}
+      animate={toggle}
+      onClick={() => cycleVariant(0)}
+    />
+  )
+}
+```
+
+---
+
+## useMotionValue
+
+<APIFunction name="useMotionValue()" />
+
+---
+
+## useViewportScrollValues
+
+<APIFunction name="useViewportScrollValues()" />

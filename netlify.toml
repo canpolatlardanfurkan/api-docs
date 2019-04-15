@@ -1,0 +1,17 @@
+[build]
+  # We publish the production build to an /api subdirectory so we can proxy
+  # to it via the framer-site netlify project and have everything served
+  # correctly at framer.com/api/
+  command = "make publish"
+  publish = "build"
+
+# Redirect from framer-api.netlify.com -> /api to avoid 404
+[[redirects]]
+  from = "/"
+  to = "/api/"
+
+# Custom 404 (Netlify defaults to 404.html in project root)
+[[redirects]]
+  from = "/*"
+  to = "/api/404.html"
+  status = 404
