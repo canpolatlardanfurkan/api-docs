@@ -131,39 +131,3 @@ node_modules. To reference a different install of either of these packages you c
 paths to make:
 
     % make data FRAMER_LIBRARY_DIR=../some/path/to/Library FRAMER_MOTION_DIR=../some/path/to/motion
-
-## Adding TSDoc annotations to Framer Library
-
-_NOTE: For Framer team only. For the moment the source code Framer Library and Framer Motion is private._
-
-For any kind of development you'll need the Framer Library & Framer Motion source code checked
-out locally.
-
-Adding documentation can be done by updating the TSDoc in the source code and running `make data` to
-re-generate the **framer.data.ts** file. We also provide a handy watcher to regenerate these files
-when they change and reload the documentation web server:
-
-    % make watch-lib
-
-Again this accepts the `FRAMER_LIBRARY_DIR` option:
-
-    % make watch-lib FRAMER_LIBRARY_DIR=../some/path/to/Library
-
-When working on Framer Motion, there's a seperate command:
-
-    % make watch-motion FRAMER_MOTION_DIR=../some/path/to/motion
-
-And for both at the same time:
-
-    % make watch-all FRAMER_LIBRARY_DIR=../some/path/to/Library FRAMER_MOTION_DIR=../some/path/to/motion
-
-A [TSDoc reference][#tsdoc] can be found on the API Extractor website and a [playground][#play] 
-helps to work how your documentation will be extracted.
-
-To update the production site, new versions of "framer" and/or "framer-motion" containing the 
-documentation changes will need to be published to the npm registry. Once done run 
-`make data-update` to update the packages and create a Pull Request with the updated
-package.json and yarn.lock files.
-
-[#tsdoc]: http://api-extractor.com/pages/tsdoc/syntax/
-[#play]: https://microsoft.github.io/tsdoc/#
