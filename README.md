@@ -14,7 +14,7 @@ website at [framer.com/api/][#website]
 [#monobase]: https://github.com/koenbok/monobase/
 [#website]: https://framer.com/api/
 
-<img src="http://static.framer.com/repos/api-banner.png" />
+<img src="http://static.framer.com/repos/api.png" />
 
 ## Contributing
 
