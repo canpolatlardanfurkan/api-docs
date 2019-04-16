@@ -4,7 +4,7 @@
     API Docs
 </h1>
 
-A static site generator for documenting the [Framer Library][#framer-library]. It’s a curated
+The official the [Framer Library][#framer-library] documentation. It’s a curated
 site that can pull in documentation from the [TSDoc][#tsdoc] comments in the project source. The
 foundation of the site is built on top of [Monobase][#monobase]. You can see the published
 website at [framer.com/api/][#website]
