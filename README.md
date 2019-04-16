@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="http://static.framer.com/repos/api-logo.png" width="40"/>
+    <img src="http://static.framer.com/repos/logo-dark.png" width="40"/>
     <br>
     API Docs
 </h1>
