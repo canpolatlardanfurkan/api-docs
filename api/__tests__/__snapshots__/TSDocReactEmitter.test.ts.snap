@@ -1,5 +1,105 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`TSDocReactEmitter list regression test 1`] = `
+Array [
+  <p>
+    Defines the distribution of the stack contents. Set to 
+    <code
+      className="DocCodeSpan"
+    >
+      "space-around"
+    </code>
+     by default, which makes the contents spread evenly across the container.
+  </p>,
+  <ul>
+    <li>
+      
+      <code
+        className="DocCodeSpan"
+      >
+        "start"
+      </code>
+       — from the leading edge of the container. 
+    </li>
+    <li>
+      
+      <code
+        className="DocCodeSpan"
+      >
+        "center"
+      </code>
+       — centered within the container. 
+    </li>
+    <li>
+      
+      <code
+        className="DocCodeSpan"
+      >
+        "end"
+      </code>
+       — from the trailing edge of the container. 
+    </li>
+    <li>
+      
+      <code
+        className="DocCodeSpan"
+      >
+        "space-between"
+      </code>
+       — spread evenly in the container. 
+    </li>
+    <li>
+      
+      <code
+        className="DocCodeSpan"
+      >
+        "space-around"
+      </code>
+       — spread evenly with excess applied at the start / end. 
+    </li>
+    <li>
+      
+      <code
+        className="DocCodeSpan"
+      >
+        "space-evenly"
+      </code>
+       — spread with equal padding between contents.
+    </li>
+  </ul>,
+  <pre
+    className="DocFencedCode"
+  >
+    <code
+      className="language-jsx line-numbers"
+      data-lang="jsx"
+    >
+      // Default
+&lt;Stack distribution="space-around" /&gt;
+
+// Start
+&lt;Stack distribution="start" /&gt;
+
+// Center
+&lt;Stack distribution="center" /&gt;
+
+// End
+&lt;Stack distribution="end" /&gt;
+
+// Space Between
+&lt;Stack distribution="space-between" /&gt;
+
+// Space Around
+&lt;Stack distribution="space-around" /&gt;
+
+// Space Evenly
+&lt;Stack distribution="space-evenly" /&gt;
+
+    </code>
+  </pre>,
+]
+`;
+
 exports[`TSDocReactEmitter renders @link tags 1`] = `
 <p>
   Hello World this is a website: 

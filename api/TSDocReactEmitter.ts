@@ -273,7 +273,7 @@ function render<T>(docNode: DocNode | undefined, { createElement, Fragment }: Li
                 if (child.kind === DocNodeKind.PlainText) {
                     const textNode = child as DocPlainText
                     if (listDelimiter.test(textNode.text)) {
-                        const listText = textNode.text.split(listDelimiter).filter(text => text.length)
+                        const listText = textNode.text.split(listDelimiter)
 
                         // Create a list item with first part of the current
                         // text string plus previous fragments.
@@ -310,8 +310,18 @@ function render<T>(docNode: DocNode | undefined, { createElement, Fragment }: Li
 
             // Append remaining fragments
             if (fragments.length) {
+                // If we have only fragments add a new line entry.
                 if (items.length === 0) {
                     items.push([])
+                }
+
+                // If the first fragment is an empty string it's a new line
+                // marker. Append a new list entry.
+                if (fragments[0].kind === DocNodeKind.PlainText) {
+                    const textNode = fragments[0] as DocPlainText
+                    if (textNode.text === "") {
+                        items.push([])
+                    }
                 }
                 items[items.length - 1].push(...fragments)
             }

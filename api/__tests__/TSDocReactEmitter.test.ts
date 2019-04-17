@@ -137,4 +137,43 @@ describe("TSDocReactEmitter", () => {
          */`)
         expect(component.toJSON()).toMatchSnapshot()
     })
+
+    test("list regression test", () => {
+        const component = createTestComponent(`
+        /**
+         * Defines the distribution of the stack contents. Set to \`"space-around"\` by default, which makes the contents spread evenly across the container.
+         * @remarks
+         *
+         * - \`"start"\` — from the leading edge of the container.
+         * - \`"center"\` — centered within the container.
+         * - \`"end"\` — from the trailing edge of the container.
+         * - \`"space-between"\` — spread evenly in the container.
+         * - \`"space-around"\` — spread evenly with excess applied at the start / end.
+         * - \`"space-evenly"\` — spread with equal padding between contents.
+         *
+         * \`\`\`jsx
+         * // Default
+         * <Stack distribution="space-around" />
+         *
+         * // Start
+         * <Stack distribution="start" />
+         *
+         * // Center
+         * <Stack distribution="center" />
+         *
+         * // End
+         * <Stack distribution="end" />
+         *
+         * // Space Between
+         * <Stack distribution="space-between" />
+         *
+         * // Space Around
+         * <Stack distribution="space-around" />
+         *
+         * // Space Evenly
+         * <Stack distribution="space-evenly" />
+         * \`\`\`
+         */`)
+        expect(component.toJSON()).toMatchSnapshot()
+    })
 })
