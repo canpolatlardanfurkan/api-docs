@@ -17,7 +17,7 @@ export const Navigation: React.FunctionComponent = () => {
             <MenuItem className="color" href="/pages/color.mdx" title="Color" />
             <MenuItem className="page" href="/pages/page.mdx" title="Page" />
             <MenuItem className="scroll" href="/pages/scroll.mdx" title="Scroll" />
-            {/* <MenuItem className="stack" href="/pages/stack.mdx" title="Stack" /> */}
+            <MenuItem className="stack" href="/pages/stack.mdx" title="Stack" />
             <MenuItem className="stack" href="/pages/utilities.mdx" title="Utilities" />
 
             <SubTitle name="Framer X" />

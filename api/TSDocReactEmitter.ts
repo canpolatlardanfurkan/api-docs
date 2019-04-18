@@ -292,6 +292,7 @@ function render<T>(docNode: DocNode | undefined, { createElement, Fragment }: Li
                                 configuration: docNode.configuration,
                                 text: listText.pop() || "",
                             })
+
                             fragments.push(textNode)
                         }
 

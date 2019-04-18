@@ -19,13 +19,11 @@ export default Template
 
 <div>
 
-The Stack Component is based on a `Frame`, which means that it supports **all Frame properties**. Think of Stacks as smart layout containers for your Frames. Add a few Frames, and they will automatically be distributed within the Stack. Easily change the `distribution`, `gap`, or `padding` properties. They’re especially useful for quickly creating lists or adaptive layouts.
+The Stack Component is based on a `Frame`, which means that it supports **all Frame properties**. Think of Stacks as smart layout containers for your Frames. Add a few Frames, and they will automatically be distributed within the Stack. Easily change the `distribution`, `gap`, or `padding` properties. They’re especially useful for quickly creating lists or adaptive layouts. Stacks set `Frame` children to relative positioning when added.
 
 - Create responsive layouts
 - Create sortable lists
 - Relative positioning and padding
-
-Stacks are heavily based on Flexbox and work best when added children have relative positioning. For convenience it automatically changes `Frame` children to relative positioning when added.
 
 </div>
 
@@ -36,8 +34,8 @@ import { Frame, Stack } from "framer"
 export function MyComponent() {
   return (
     <Stack size={100}>
-      <Frame background="#09F" size={25} radius={"50%"} />
-      <Frame background="#05F" size={25} radius={"50%"} />
+      <Frame background="#09F" size={25} radius="50%" />
+      <Frame background="#05F" size={25} radius="50%" />
     </Stack>
   )
 }
