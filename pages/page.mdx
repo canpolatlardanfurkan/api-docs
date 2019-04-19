@@ -70,8 +70,40 @@ export function MyComponent() {
 
 ## Effects
 
-<APIEnumField name="PageEffect.None" />
-<APIEnumField name="PageEffect.CoverFlow" />
-<APIEnumField name="PageEffect.Cube" />
-<APIEnumField name="PageEffect.Pile" />
-<APIEnumField name="PageEffect.Wheel" />
+### none
+
+No custom effect is applied. This is the default.
+
+```tsx
+<Page defaultEffect={"none"} />
+```
+
+### cube
+
+Each page is positioned as a 3D cube, connected to the current page.
+
+```tsx
+<Page defaultEffect={"cube"} />
+```
+
+### coverflow
+
+Each page is positioned in 3D, behind the current page.
+
+```tsx
+<Page defaultEffect={"coverflow"} />
+```
+### wheel
+
+Each page is gently titled in 3D, like a wheel.
+
+```tsx
+<Page defaultEffect={"wheel"} />
+```
+### pile
+
+Each page is stacked behind the current page.
+
+```tsx
+<Page defaultEffect={"pile"} />
+```
