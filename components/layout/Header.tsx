@@ -94,9 +94,51 @@ export const Stack = styled.div`
     }
 `
 
+const VideoBackground = styled.div<{ height?: number; internal?: boolean }>`
+    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-left: 20px;
+    margin-top: 0 !important;
+
+    @media (min-width: ${widescreen}) {
+        width: 560px;
+        height: 315px;
+        padding: 0;
+    }
+
+    @media (max-width: ${desktop}) {
+        margin-left: 0;
+    }
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+`
+
+export const EmbeddedVideo: React.FunctionComponent = (props: any) => {
+    return (
+        <VideoBackground className="header" height={props.height ? props.height : 300} internal={props.internal}>
+            {props.children}
+        </VideoBackground>
+    )
+}
+
 export const EmbeddedDemo: React.FunctionComponent = (props: any) => {
     return (
-        <Background className="embedded-demo header" height={props.height ? props.height : 300} internal={props.internal}>
+        <Background
+            className="embedded-demo header"
+            height={props.height ? props.height : 300}
+            internal={props.internal}
+        >
             {props.children}
         </Background>
     )
