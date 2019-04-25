@@ -107,11 +107,6 @@ const VersionBadgeBackground = styled.div`
     font-weight: 500;
     font-size: 12px;
 
-    /* Temporary overrides for Beta */
-    /* Todo: Remove before release */
-    background: rgba(0, 85, 255, 0.1);
-    color: #05f;
-
     @media (max-width: ${tablet}) {
         position: relative;
         margin-left: 30px;
@@ -119,8 +114,7 @@ const VersionBadgeBackground = styled.div`
 `
 
 const VersionBadge: React.FunctionComponent<{ version: string }> = props => {
-    // return <VersionBadgeBackground>v&#8202;&#8202;{props.version}</VersionBadgeBackground>
-    return <VersionBadgeBackground>Beta</VersionBadgeBackground>
+    return <VersionBadgeBackground>v&#8202;&#8202;{props.version}</VersionBadgeBackground>
 }
 
 export const Sidebar: React.FunctionComponent = () => (
