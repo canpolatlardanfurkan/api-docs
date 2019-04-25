@@ -45,7 +45,9 @@ const GridDiv = styled.div`
         grid-row-end: 3;
         grid-column-start: 2;
     }
-
+    .header.video {
+        grid-row-start: auto;
+    }
     &.grid-code + .grid-code {
         margin-top: 30px;
     }

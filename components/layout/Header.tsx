@@ -125,11 +125,7 @@ const VideoBackground = styled.div<{ height?: number; internal?: boolean }>`
 `
 
 export const EmbeddedVideo: React.FunctionComponent = (props: any) => {
-    return (
-        <VideoBackground className="header" height={props.height ? props.height : 300} internal={props.internal}>
-            {props.children}
-        </VideoBackground>
-    )
+    return <VideoBackground className="header video">{props.children}</VideoBackground>
 }
 
 export const EmbeddedDemo: React.FunctionComponent = (props: any) => {
