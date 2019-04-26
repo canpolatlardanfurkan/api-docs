@@ -7,6 +7,7 @@ import {
   APIProperty,
   APIMethod,
   APIFunction,
+  APIEnumField,
 } from "../components"
 
 export default Template
@@ -17,6 +18,14 @@ export default Template
   Utilities provide simple helper methods and properties for
   advanced prototyping needs.
 </span>
+
+---
+
+## Point
+
+<APIFunction name="Point()" />
+
+<APIFunction name="(Point:namespace).subtract()" />
 
 ---
 
@@ -74,11 +83,7 @@ The `x` value starts at `0`, and we’re converting the horizontal movement of t
 
 ```jsx highlight(2-6, 9-10, 12)
 import * as React from "react"
-import {
-  Frame,
-  useMotionValue,
-  useTransform,
-} from "framer"
+import { Frame, useMotionValue, useTransform } from "framer"
 
 export function MyComponent() {
   const x = useMotionValue(0)
@@ -181,8 +186,6 @@ const variants = {
 }
 
 controls.start("visible")
-
-
 ```
 
 ---
