@@ -3265,10 +3265,10 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
-framer-motion@^0.16.0:
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-0.16.0.tgz#0f76785f365fe7d537cdc17867ea086161a69e75"
-  integrity sha512-peYVnfdw+m/0ORRiVUF+lKsYLio5qlgG0o1DyDLNrKKjdVqci8zuUTy3hVU0Y+TSYl07s95CJZgKkBgtnbW0WQ==
+framer-motion@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-0.16.1.tgz#e78419ae5eca2a2a7a5efd7aaa8ca3c1dc2c592e"
+  integrity sha512-MNaGC2NionMMsvijzpeaSG3qXhDCyzR08O8Fycsg/xpMu6Gc5paY9dBiGlFPFHDD3F0e259VBVQ1d4I2JGssow==
   dependencies:
     "@emotion/is-prop-valid" "^0.7.3"
     "@popmotion/popcorn" "^0.3.6"
@@ -3276,12 +3276,12 @@ framer-motion@^0.16.0:
     hey-listen "^1.0.8"
     popmotion "^8.6.8"
     style-value-types "^3.1.0"
-    stylefire "^4.1.0"
+    stylefire "^4.1.1"
 
-framer@^1.0.0-beta.10:
-  version "1.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/framer/-/framer-1.0.0-beta.10.tgz#f4a45d93fe89a007ffa3d94321a9de5c62294e04"
-  integrity sha512-bE1c2/sqt3XAKr/WYSh2bZClFFXx5FY2iVkEu4kLek3wn/qSks8FPSpRYs21IGvT0VeCHhnP8ze2ibjtzA8lfQ==
+framer@^1.0.0-beta.13:
+  version "1.0.0-beta.13"
+  resolved "https://registry.yarnpkg.com/framer/-/framer-1.0.0-beta.13.tgz#e738bf734867445149e7b594325c1cd178758040"
+  integrity sha512-2fpba5p5faoxjzJj2s1FN+AV+km/8yzhRPlXn7EVWgOtiuvPdwa1Yu5KZoCfWGIdMCk/GGzoXKFqkhUNMLBOlw==
   dependencies:
     style-value-types "^3.1.0"
 
@@ -7292,10 +7292,10 @@ stylefire@2.4.3:
     hey-listen "^1.0.4"
     style-value-types "^3.0.6"
 
-stylefire@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/stylefire/-/stylefire-4.1.0.tgz#859da6d98955e1e7e567be2305567819720d3b65"
-  integrity sha512-DzrFVxqZ89QZt2qwNiMoEYPWPixtDdv48bCjDVHgokKAG7ZLK4YWjpDG3+AYD6tnIKpYCKjUXk0HcJFL8fl3Kw==
+stylefire@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/stylefire/-/stylefire-4.1.1.tgz#455c1b16905c76a1868b5923f2b442db26c6cbcd"
+  integrity sha512-BHO2gztQvl5N0oxt8aQSOBbsqADSAoQRQFN0hufFlIekTfsIwHPP/AujTlhBd7kXMdg/WDcL20iJbXy9lsnJYg==
   dependencies:
     "@popmotion/popcorn" "^0.3.6"
     framesync "^4.0.0"
