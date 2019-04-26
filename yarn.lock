@@ -3278,10 +3278,10 @@ framer-motion@^0.16.1:
     style-value-types "^3.1.0"
     stylefire "^4.1.1"
 
-framer@^1.0.0-beta.13:
-  version "1.0.0-beta.13"
-  resolved "https://registry.yarnpkg.com/framer/-/framer-1.0.0-beta.13.tgz#e738bf734867445149e7b594325c1cd178758040"
-  integrity sha512-2fpba5p5faoxjzJj2s1FN+AV+km/8yzhRPlXn7EVWgOtiuvPdwa1Yu5KZoCfWGIdMCk/GGzoXKFqkhUNMLBOlw==
+framer@^1.0.0-beta.14:
+  version "1.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/framer/-/framer-1.0.0-beta.14.tgz#28f171207bce6deb44707ebf329618ca566087e3"
+  integrity sha512-s7b+NHM29/7UUSvki2pdLMZQdiKEAUJfKyjeFrFiDmdwoy0rTXZotOLBa+95QP5wlQWn1JPQoePU2Bah5D8GKA==
   dependencies:
     style-value-types "^3.1.0"
 
