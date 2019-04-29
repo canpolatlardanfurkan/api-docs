@@ -74,11 +74,7 @@ The `x` value starts at `0`, and we’re converting the horizontal movement of t
 
 ```jsx highlight(2-6, 9-10, 12)
 import * as React from "react"
-import {
-  Frame,
-  useMotionValue,
-  useTransform,
-} from "framer"
+import { Frame, useMotionValue, useTransform } from "framer"
 
 export function MyComponent() {
   const x = useMotionValue(0)
@@ -181,8 +177,6 @@ const variants = {
 }
 
 controls.start("visible")
-
-
 ```
 
 ---
@@ -214,31 +208,12 @@ import * as React from "react"
 import { Frame, useCycle } from "framer"
 
 export function MyComponent() {
-  const [animate, cycle] = useCycle([
+  const [animate, cycle] = useCycle(
     { rotate: 90, scale: 0.5 },
-    { rotate: 0, scale: 1 },
-  ])
+    { rotate: 0, scale: 1 }
+  )
 
   return <Frame animate={animate} onTap={() => cycle()} />
-}
-```
-
----
-
-### Change Initial State
-
-By default, the initial state is the first item in the provided array.
-By passing a different index as the second argument, `useCycle` can start on a different item in the array. Please note that the `index` value of an array starts at `0`.
-
-```jsx highlight(2, 5-6,8)
-import * as React from "react"
-import { Frame, useCycle } from "framer"
-
-export function MyComponent() {
-  // Start x at 100
-  const [x, cycleX] = useCycle([0, 50, 100], 2)
-
-  return <Frame animate={{ x }} onClick={() => cycleX()} />
 }
 ```
 
@@ -252,7 +227,7 @@ The returned `cycleState` function, by default, cycles to the next item in the p
 Optionally, it accepts an index that will cycle to a specific item in the array.
 In this example, we’ve used `variants` and passed along the names of each variant, instead of directly including the properties.
 
-Here, it will always cycle to the `off` state, because we’ve passed along the index of `0` to the `cycleToggle` function. If we were to remove it, it would cycle between `off` and `on` again.
+Here, it will always cycle to the `off` state, because we’ve passed along the index of `0` to the `cycleVariant` function. If we were to remove it, it would cycle between `off` and `on` again.
 
 </div>
 
@@ -266,7 +241,7 @@ export function MyComponent() {
     on: { opacity: 1.0 },
   }
 
-  const [toggle, cycleToggle] = useCycle(["off", "on"], 1)
+  const [toggle, cycleVariant] = useCycle("off", "on")
 
   return (
     <Frame
